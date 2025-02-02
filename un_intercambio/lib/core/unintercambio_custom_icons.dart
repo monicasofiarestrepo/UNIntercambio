@@ -24,7 +24,7 @@ import 'package:flutter/widgets.dart';
 class UNintercambioIcons {
   UNintercambioIcons._();
 
-  static const _kFontFam = 'UNintercambioIcons';
+  static const _kFontFam = 'UNintercambioCustomIcons';
   static const String? _kFontPkg = null;
 
   static const IconData note_1 = IconData(0xeba4, fontFamily: _kFontFam, fontPackage: _kFontPkg);

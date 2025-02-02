@@ -40,7 +40,7 @@ class IconTextField extends StatelessWidget {
                 fontSize: 16,
               ),
           contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-          suffixIcon: suffixIcon,
+          suffixIcon: suffixIcon, 
           prefixIcon: prefixIcon),
     );
   }
