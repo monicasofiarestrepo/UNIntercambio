@@ -10,7 +10,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // Background Image
+
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -20,7 +20,7 @@ class LoginPage extends StatelessWidget {
             ),
           ),
 
-          // Centered Content
+
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -33,7 +33,7 @@ class LoginPage extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                const SizedBox(height: 20), // Space between text and button
+                const SizedBox(height: 20), 
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/home');

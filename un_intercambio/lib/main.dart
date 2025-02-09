@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'UNintercambio',
       initialRoute: '/',
       routes: {
-        '/home': (context) => const HomePage(title: 'UNintercambio'),
+        '/home': (context) => const HomePage(title: 'UNintercambio home'),
         '/info': (context) => const InfoPage(title: 'Información'),
         '/chat': (context) => const ChatPage(title: 'Chat'),
         '/profile': (context) => const UserProfilePage(title: 'Perfil'),

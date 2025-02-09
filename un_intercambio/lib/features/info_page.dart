@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:un_intercambio/features/widgets/bottom_nav_bar.dart';
 
 class InfoPage extends StatelessWidget {
   final String title;
@@ -9,6 +9,7 @@ class InfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavBar(currentIndex: 1),
       body: Stack(
         children: [
           Container(
