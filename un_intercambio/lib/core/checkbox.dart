@@ -11,13 +11,14 @@ class CheckBox extends StatelessWidget {
     this.verticalVisualDensity = 0,
     this.scale = 1,
     this.spaceWidth = 0,
-    this.shapeType = '',
+    this.shapeType = '', //TODO: cambiar a bool de "iscircular" 
+    
   });
 
   final Widget label;
   final bool value;
   final Color activeColor;
-  final Color? borderColor;
+  final Color? borderColor;  
   final double? scale;
   final double? spaceWidth;
   final double verticalVisualDensity;
