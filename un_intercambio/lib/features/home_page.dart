@@ -1,30 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:un_intercambio/core/unintercambio_custom_icons.dart';
 
-void main() {
-  runApp(const MyApp());
-}
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'UNintercambio',
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MyHomePage(title: 'UNintercambio'),
-      },
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
+class HomePage extends StatelessWidget {
   final String title;
   
-  const MyHomePage({super.key, required this.title});
+  const HomePage({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +15,7 @@ class MyHomePage extends StatelessWidget {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/images/background.png"), 
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.contain,
               ),
             ),
           ),
@@ -43,7 +23,7 @@ class MyHomePage extends StatelessWidget {
           Center(
             child: Text(
               title,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
             ),
           ),
         ],
