@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:un_intercambio/core/unintercambio_custom_icons.dart';
+import 'package:un_intercambio/core/theme.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -7,7 +9,7 @@ class BottomNavBar extends StatelessWidget {
 
   void _onItemTapped(BuildContext context, int index) {
     const routes = ['/home', '/info', '/chat', '/profile'];
-    
+
     if (currentIndex != index) {
       Navigator.pushReplacementNamed(context, routes[index]);
     }
@@ -19,13 +21,13 @@ class BottomNavBar extends StatelessWidget {
       currentIndex: currentIndex,
       onTap: (index) => _onItemTapped(context, index),
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: Colors.blueAccent,
-      unselectedItemColor: Colors.grey,
+      selectedItemColor: SystemColors.primaryBlue,
+      unselectedItemColor: SystemColors.neutralMedium,
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.info), label: 'Info'),
-        BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        BottomNavigationBarItem(icon: Icon(UNintercambioIcons.home_1), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(UNintercambioIcons.book_open), label: 'Info'),
+        BottomNavigationBarItem(icon: Icon(UNintercambioIcons.chat_1), label: 'Chat'),
+        BottomNavigationBarItem(icon: Icon(UNintercambioIcons.user), label: 'Profile'),
       ],
     );
   }
