@@ -30,7 +30,7 @@ class PrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      hoverColor: hoverColor ?? SystemColors.primaryBlue.withValues(alpha: 0.8),
+      hoverColor: hoverColor ?? SystemColors.primaryBlue,
       disabledColor: SystemColors.neutralDark,
       elevation: 1,
       minWidth: minWidth ?? double.infinity,

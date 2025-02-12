@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:un_intercambio/features/widgets/bottom_nav_bar.dart';
 
-
 class HomePage extends StatelessWidget {
   final String title;
-  
+
   const HomePage({super.key, required this.title});
 
   @override
@@ -16,18 +15,19 @@ class HomePage extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/background.png"), 
+                image: AssetImage("assets/images/background.png"),
                 fit: BoxFit.contain,
               ),
             ),
           ),
-
+          //hina 
           Center(
             child: Text(
               title,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
             ),
-          ),
+          ) 
+          ,
         ],
       ),
     );
