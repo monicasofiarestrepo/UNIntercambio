@@ -4,20 +4,32 @@ class OptionCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final IconData icon;
+  final String route; // Nueva propiedad para la ruta
 
-  const OptionCard({Key? key,  required this.title, required this.subtitle, required this.icon}) : super(key: key);
+  const OptionCard({
+    Key? key,
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.route, // Ruta requerida
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      child: ListTile(
-        leading: Icon(icon, color: Colors.grey),
-        title: Text(title),
-        subtitle: Text(subtitle),
-        trailing: const TextButton(
-          onPressed: null,
-          child: Text('Ir', style: TextStyle(color: Colors.pink)),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, route); // Navegar a la ruta proporcionada
+      },
+      child: Card(
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        child: ListTile(
+          leading: Icon(icon, color: Colors.grey),
+          title: Text(title),
+          subtitle: Text(subtitle),
+          trailing: const TextButton(
+            onPressed: null,
+            child: Text('Ir', style: TextStyle(color: Colors.pink)),
+          ),
         ),
       ),
     );
