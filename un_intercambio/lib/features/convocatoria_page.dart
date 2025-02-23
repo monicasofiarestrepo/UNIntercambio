@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:un_intercambio/core/theme.dart';
 import 'package:un_intercambio/features/base_page.dart';
+import 'package:un_intercambio/features/candidatos_page.dart';
 
 //TODO hacer más bonitos los campos
 //TODO hacer que cuando se abran las nuevas paginas se deseleccione el home
@@ -8,10 +9,10 @@ import 'package:un_intercambio/features/base_page.dart';
 //TODO revisar si se pueden utilizar widgets o colores ya creados
 
 class Convocatoria {
-  final String nombre;
-  final String tipoMovilidad;
-  final String estado;
-  final String lugar;
+  String nombre;
+  String tipoMovilidad;
+  String estado;
+  String lugar;
 
   Convocatoria({
     required this.nombre,
@@ -32,24 +33,9 @@ class ConvocatoriaPage extends StatefulWidget {
 
 class _ConvocatoriaPageState extends State<ConvocatoriaPage> {
   final List<Convocatoria> convocatorias = [
-    Convocatoria(
-      nombre: "Intercambio a España 2024",
-      tipoMovilidad: "Saliente",
-      estado: "Activa",
-      lugar: "España",
-    ),
-    Convocatoria(
-      nombre: "Programa de intercambio Alemania",
-      tipoMovilidad: "Entrante",
-      estado: "Cerrada",
-      lugar: "Alemania",
-    ),
-    Convocatoria(
-      nombre: "Intercambio con Japón",
-      tipoMovilidad: "Saliente",
-      estado: "Activa",
-      lugar: "Japón",
-    ),
+    Convocatoria(nombre: "Intercambio a España 2024", tipoMovilidad: "Saliente", estado: "Activa", lugar: "España"),
+    Convocatoria(nombre: "Programa de intercambio Alemania", tipoMovilidad: "Entrante", estado: "Cerrada", lugar: "Alemania"),
+    Convocatoria(nombre: "Intercambio con Japón", tipoMovilidad: "Saliente", estado: "Activa", lugar: "Japón"),
   ];
 
   List<Convocatoria> convocatoriasFiltradas = [];
@@ -58,14 +44,14 @@ class _ConvocatoriaPageState extends State<ConvocatoriaPage> {
   @override
   void initState() {
     super.initState();
-    convocatoriasFiltradas = convocatorias;
+    convocatoriasFiltradas = List.from(convocatorias);
   }
 
   void filtrarConvocatorias(String query) {
     setState(() {
       searchText = query;
       if (query.isEmpty) {
-        convocatoriasFiltradas = convocatorias;
+        convocatoriasFiltradas = List.from(convocatorias);
       } else {
         convocatoriasFiltradas = convocatorias
             .where((convocatoria) =>
@@ -79,44 +65,42 @@ class _ConvocatoriaPageState extends State<ConvocatoriaPage> {
   }
 
   void editarConvocatoria(Convocatoria convocatoria) {
-    // Aquí puedes abrir un formulario de edición, por ejemplo:
+    final TextEditingController nombreController = TextEditingController(text: convocatoria.nombre);
+    final TextEditingController tipoMovilidadController = TextEditingController(text: convocatoria.tipoMovilidad);
+    final TextEditingController estadoController = TextEditingController(text: convocatoria.estado);
+    final TextEditingController lugarController = TextEditingController(text: convocatoria.lugar);
+
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: Text('Editar Convocatoria'),
-          content: Column(
-            children: [
-              TextField(
-                controller: TextEditingController(text: convocatoria.nombre),
-                decoration: InputDecoration(labelText: 'Nombre'),
-              ),
-              TextField(
-                controller: TextEditingController(text: convocatoria.tipoMovilidad),
-                decoration: InputDecoration(labelText: 'Tipo de Movilidad'),
-              ),
-              TextField(
-                controller: TextEditingController(text: convocatoria.estado),
-                decoration: InputDecoration(labelText: 'Estado'),
-              ),
-              TextField(
-                controller: TextEditingController(text: convocatoria.lugar),
-                decoration: InputDecoration(labelText: 'Lugar'),
-              ),
-            ],
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(controller: nombreController, decoration: InputDecoration(labelText: 'Nombre')),
+                TextField(controller: tipoMovilidadController, decoration: InputDecoration(labelText: 'Tipo de Movilidad')),
+                TextField(controller: estadoController, decoration: InputDecoration(labelText: 'Estado')),
+                TextField(controller: lugarController, decoration: InputDecoration(labelText: 'Lugar')),
+              ],
+            ),
           ),
           actions: [
             TextButton(
               onPressed: () {
-                // Aquí guardarías los cambios realizados en el formulario
+                setState(() {
+                  convocatoria.nombre = nombreController.text;
+                  convocatoria.tipoMovilidad = tipoMovilidadController.text;
+                  convocatoria.estado = estadoController.text;
+                  convocatoria.lugar = lugarController.text;
+                });
                 Navigator.pop(context);
               },
               child: Text('Guardar'),
             ),
             TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: () => Navigator.pop(context),
               child: Text('Cancelar'),
             ),
           ],
@@ -136,16 +120,15 @@ class _ConvocatoriaPageState extends State<ConvocatoriaPage> {
             TextButton(
               onPressed: () {
                 setState(() {
+                  convocatorias.remove(convocatoria);
                   convocatoriasFiltradas.remove(convocatoria);
                 });
                 Navigator.pop(context);
               },
-              child: Text('Eliminar'),
+              child: Text('Eliminar', style: TextStyle(color: Colors.red)),
             ),
             TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: () => Navigator.pop(context),
               child: Text('Cancelar'),
             ),
           ],
@@ -201,20 +184,24 @@ class _ConvocatoriaPageState extends State<ConvocatoriaPage> {
                       subtitle: Text(
                         "Tipo: ${convocatoria.tipoMovilidad} | Estado: ${convocatoria.estado} | Lugar: ${convocatoria.lugar}",
                       ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CandidatosPage(convocatoria: convocatoria),
+                          ),
+                        );
+                      },
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
                             icon: Icon(Icons.edit, color: SystemColors.primaryBlue),
-                            onPressed: () {
-                              editarConvocatoria(convocatoria);
-                            },
+                            onPressed: () => editarConvocatoria(convocatoria),
                           ),
                           IconButton(
                             icon: Icon(Icons.delete, color: SystemColors.labelError),
-                            onPressed: () {
-                              eliminarConvocatoria(convocatoria);
-                            },
+                            onPressed: () => eliminarConvocatoria(convocatoria),
                           ),
                         ],
                       ),

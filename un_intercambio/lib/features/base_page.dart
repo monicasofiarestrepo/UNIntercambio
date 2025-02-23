@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:un_intercambio/features/widgets/bottom_nav_bar.dart';
 
-//TODO Añadir un hipervinculo en el logo para que envíe siempre al home
-//TODO añadir lo de la campanita y el menú?
-//TODO arreglar que el fonde tiene un margen que no sé cómo quitar
-
 class BasePage extends StatelessWidget {
-  final int currentIndex;
+  final int? currentIndex;
   final Widget child;
+  final bool showBottomNavBar;
 
   const BasePage({
     Key? key,
-    required this.currentIndex,
+    this.currentIndex,
     required this.child,
+    this.showBottomNavBar = true, // Por defecto se muestra el BottomNavBar
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavBar(currentIndex: currentIndex),
+      bottomNavigationBar: showBottomNavBar && currentIndex != null
+          ? BottomNavBar(currentIndex: currentIndex!)
+          : null, // No muestra el navbar si showBottomNavBar es false
       body: Stack(
         children: [
           Container(

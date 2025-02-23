@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:un_intercambio/features/base_page.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _nameController = TextEditingController();
     final TextEditingController _emailController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
 
-    void _login() {
-      // TODO: Lógica de inicio de sesión
-    }
-
-    void _goToHome() {
-      Navigator.pushNamed(context, '/home');
+    void _register() {
+      // TODO: Lógica de registro
     }
 
     return BasePage(
@@ -25,6 +22,11 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              TextField(
+                controller: _nameController,
+                decoration: const InputDecoration(labelText: 'Nombre'),
+              ),
+              const SizedBox(height: 12),
               TextField(
                 controller: _emailController,
                 decoration: const InputDecoration(labelText: 'Correo electrónico'),
@@ -37,15 +39,10 @@ class LoginPage extends StatelessWidget {
                 obscureText: true,
               ),
               const SizedBox(height: 20),
-              ElevatedButton(onPressed: _login, child: const Text('Ingresar')),
+              ElevatedButton(onPressed: _register, child: const Text('Registrarse')),
               TextButton(
-                onPressed: () => Navigator.pushNamed(context, '/recover'),
-                child: const Text('¿Olvidaste tu contraseña?'),
-              ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: _goToHome,
-                child: const Text('Ir al Home'),
+                onPressed: () => Navigator.pushNamed(context, '/login'),
+                child: const Text('¿Ya tienes una cuenta? Inicia sesión'),
               ),
             ],
           ),
