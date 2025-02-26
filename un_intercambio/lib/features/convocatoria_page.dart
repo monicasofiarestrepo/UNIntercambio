@@ -25,7 +25,7 @@ class Convocatoria {
 class ConvocatoriaPage extends StatefulWidget {
   final String title;
 
-  ConvocatoriaPage({super.key, required this.title});
+  const ConvocatoriaPage({super.key, required this.title});
 
   @override
   _ConvocatoriaPageState createState() => _ConvocatoriaPageState();

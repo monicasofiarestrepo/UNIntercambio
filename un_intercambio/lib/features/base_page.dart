@@ -5,12 +5,14 @@ class BasePage extends StatelessWidget {
   final int? currentIndex;
   final Widget child;
   final bool showBottomNavBar;
+  final String backgroundImageRoute;
 
   const BasePage({
     Key? key,
     this.currentIndex,
     required this.child,
     this.showBottomNavBar = true, // Por defecto se muestra el BottomNavBar
+    this.backgroundImageRoute = "assets/images/noLogoBackground.png",
   }) : super(key: key);
 
   @override
@@ -22,10 +24,10 @@ class BasePage extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/background.png"),
-                fit: BoxFit.contain,
+                image: AssetImage(backgroundImageRoute),
+                fit: BoxFit.fitWidth,
               ),
             ),
           ),

@@ -14,6 +14,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BasePage(
+      backgroundImageRoute: 'assets/images/backgroundWithLogo.png',
       currentIndex: 0, // Índice de la barra de navegación para esta página
       child: Padding(
         padding: const EdgeInsets.all(16.0),

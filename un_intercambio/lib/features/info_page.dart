@@ -15,8 +15,8 @@ class InfoPage extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/background.png"), 
-                fit: BoxFit.contain,
+                image: AssetImage("assets/images/backgroundWithLogo.png"), 
+                fit: BoxFit.fitWidth
               ),
             ),
           ),
