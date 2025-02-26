@@ -1,61 +1,110 @@
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:un_intercambio/features/base_page.dart';
 
-class UserProfilePage extends StatelessWidget {
+class UserProfilePage extends StatefulWidget {
   final String title;
-  
+
   const UserProfilePage({super.key, required this.title});
+
+  @override
+  State<UserProfilePage> createState() => _UserProfilePageState();
+}
+
+class _UserProfilePageState extends State<UserProfilePage> {
+  List<PlatformFile> _archivos = [];
+
+  Future<void> _seleccionarArchivos() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true, // Permite seleccionar múltiples archivos
+    );
+
+    if (result != null) {
+      setState(() {
+        _archivos = result.files; // Guardamos los archivos seleccionados
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return BasePage(
       currentIndex: 3,
-    
-      child: Center (child:
-      Column (
-      
-      children: 
-      [
-        SizedBox(height: 120,),
-        Text("Estudiante 1", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
-        SizedBox(height: 30,),
-
-        Container(
-        width: 380,
-        height: 550,
-        decoration:  BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(100)),
-          color: Colors.grey.shade100,
-        ),
-        padding: EdgeInsets.all(30),
+      child: Center(
         child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-              child: Image.asset('assets/images/avatar2.png'),
-          ),
-              InfoText(label: "Promedio", value: "4.8"),
-              InfoText(label: "Avance", value: "81%"),
-              InfoText(label: "Carrera", value: "Ing. Administrativa"),
-              InfoText(label: "Idiomas", value: "Inglés B1 y portugués A2"),
-              InfoText(label: "Correo", value: "estudiantosa@unal.edu.co"),
-              InfoText(label: "Celular", value: "3044833098"),
+          children: [
+            const SizedBox(height: 100),
+            const Text(
+              "Estudiante 1",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 30),
+            Container(
+              width: 380,
+              height: 550,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.grey.shade100,
+              ),
+              padding: const EdgeInsets.all(30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Image.asset(
+                      'assets/images/avatar2.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const InfoText(label: "Promedio", value: "4.8"),
+                  const InfoText(label: "Avance", value: "81%"),
+                  const InfoText(label: "Carrera", value: "Ing. Administrativa"),
+                  const InfoText(label: "Idiomas", value: "Inglés B1 y portugués A2"),
+                  const InfoText(label: "Correo", value: "estudiantosa@unal.edu.co"),
+                  const InfoText(label: "Celular", value: "3044833098"),
 
-          Center(child: Column(children: [
-            Icon(Icons.upload_file, size: 60),
-            Text("Hoja de Vida", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-          ],),)
-
-
-        ],)
-      )],
-      ))
+                  // Botón de carga de archivos
+                    Center(child:                  
+                    GestureDetector(
+                    onTap: _seleccionarArchivos,
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                       
+                        borderRadius: BorderRadius.circular(8),
+                     
+                      ),
+                      child: _archivos.isEmpty
+                          ? Column(
+                              children: const [
+                                Icon(Icons.upload_file, size: 40),
+                                Text('Hoja de vida', style: TextStyle(fontSize: 16)),
+                              ],
+                            )
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Icon(Icons.check_circle, color: Colors.green, size: 40),
+                                Text(
+                                  'Archivos seleccionados: ${_archivos.length}',
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                    ),
+                  ),)
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
-
+// Widget reutilizable para mostrar texto con negritas
 class InfoText extends StatelessWidget {
   final String label;
   final String value;
