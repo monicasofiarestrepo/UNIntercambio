@@ -25,7 +25,7 @@ class BasePage extends StatelessWidget {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/images/background.png"),
-                fit: BoxFit.contain,
+                fit: BoxFit.cover, // Cambiado de contain a cover
               ),
             ),
           ),

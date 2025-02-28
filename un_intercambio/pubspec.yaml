@@ -39,6 +39,7 @@ dependencies:
   flutter_file_dialog: ^2.0.0
   file_picker: ^5.0.1
   provider: 6.1.2
+  intl: ^0.17.0
   
 
 dev_dependencies:

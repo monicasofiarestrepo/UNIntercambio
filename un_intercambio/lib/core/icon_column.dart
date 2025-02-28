@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:un_intercambio/core/theme.dart';
 
 class IconColumn extends StatelessWidget {
   final IconData icon;
@@ -20,9 +21,11 @@ class IconColumn extends StatelessWidget {
       },
       child: Column(
         children: [
-          Icon(icon, size: 40, color: Colors.pink),
+          Icon(icon, size: 40, color: SystemColors.primaryPrink),
           const SizedBox(height: 8),
-          Text(label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          Text(label,
+              style:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.normal)),
         ],
       ),
     );
