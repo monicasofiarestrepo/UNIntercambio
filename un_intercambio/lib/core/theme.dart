@@ -21,6 +21,7 @@ class SystemColors {
   static const Color labelError2 = Color(0xffdd8080);
   static const Color labelWarning = Color(0xffffad39);
   static const Color labelWarning2 = Color(0xffffc472);
+  static const Color primaryViolet = Color(0xFF575988);
 }
 
 class AppTheme {
@@ -34,8 +35,14 @@ class AppTheme {
         elevation: 0,
       ),
       textTheme: TextTheme(
-        headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: SystemColors.jetBlack),
-        headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: SystemColors.neutralDark),
+        headlineLarge: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            color: SystemColors.jetBlack),
+        headlineMedium: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: SystemColors.neutralDark),
         bodyMedium: TextStyle(fontSize: 16, color: SystemColors.neutralDark),
         bodySmall: TextStyle(fontSize: 14, color: SystemColors.neutralMedium),
       ),

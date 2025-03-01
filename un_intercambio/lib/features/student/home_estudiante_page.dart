@@ -8,9 +8,7 @@ import 'package:un_intercambio/core/theme.dart';
 //AGREGAR RUTAS DE PÁGINAS
 
 class Home extends StatelessWidget {
-  final String title;
-
-  const Home({super.key, required this.title});
+  const Home({super.key});
 
   String getCurrentTime() {
     return DateFormat('HH:mm').format(DateTime.now());
@@ -140,7 +138,7 @@ class Home extends StatelessWidget {
                 IconColumn(
                     icon: Icons.favorite,
                     label: 'Convocatorias Guardadas',
-                    route: '/'),
+                    route: '/convocatorias'),
                 IconColumn(
                   icon: Icons.folder,
                   label: 'Documentos Subidos',
