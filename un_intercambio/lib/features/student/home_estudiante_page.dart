@@ -136,12 +136,12 @@ class Home extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: const [
                 IconColumn(
-                    icon: Icons.favorite,
-                    label: 'Convocatorias Guardadas',
+                    icon: Icons.article,
+                    label: 'Convocatorias disponibles',
                     route: '/convocatorias'),
                 IconColumn(
                   icon: Icons.folder,
-                  label: 'Documentos Subidos',
+                  label: 'Documentos guardados',
                   route: '/',
                 ),
               ],

@@ -4,22 +4,7 @@ import 'package:un_intercambio/core/theme.dart';
 import 'package:un_intercambio/features/base_page.dart';
 import 'package:un_intercambio/features/student/detalle_convocatoria_page.dart';
 import 'package:un_intercambio/data/convocatorias_data.dart';
-
-class ConvocatoriaEstudiante {
-  String nombre;
-  String tipoMovilidad;
-  String tipo; // Nacional o Internacional
-  String lugar;
-  String idioma;
-
-  ConvocatoriaEstudiante({
-    required this.nombre,
-    required this.tipoMovilidad,
-    required this.tipo,
-    required this.lugar,
-    required this.idioma,
-  });
-}
+import 'package:un_intercambio/models/convocatoria_estudiante.dart';
 
 String getCurrentTime() {
   return DateFormat('HH:mm').format(DateTime.now());
@@ -83,7 +68,8 @@ class ConvocatoriaEstudiantePageState
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => DetalleConvocatoriaPage(),
+        builder: (context) =>
+            DetalleConvocatoriaPage(convocatoria: convocatoria),
       ),
     );
   }
@@ -91,7 +77,7 @@ class ConvocatoriaEstudiantePageState
   @override
   Widget build(BuildContext context) {
     return BasePage(
-      currentIndex: 0,
+      currentIndex: 1,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
