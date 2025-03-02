@@ -129,7 +129,7 @@ class _ConvocatoriaPageState extends ConsumerState<ConvocatoriaPage> {
     final convocatoriaAsync = ref.watch(convocatoriaProvider);
 
     return BasePage(
-      currentIndex: 0,
+      currentIndex: 1,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: convocatoriaAsync.when(
