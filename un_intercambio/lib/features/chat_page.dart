@@ -45,7 +45,7 @@ class _ChatPageState extends State<ChatPage> {
       _controller.clear();
 
       // Respuesta automática con "Hola"
-      Future.delayed(Duration(milliseconds: 500), () {
+      Future.delayed(const Duration(milliseconds: 500), () {
         setState(() {
           _messages.add("Hola"); // Agregar la respuesta "Hola"
         });
@@ -88,7 +88,7 @@ class _ChatPageState extends State<ChatPage> {
             child: _currentStudent == null
                 ? Text(
                     widget.title.isNotEmpty ? widget.title : 'Selecciona un chat',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: SystemColors.primaryBlue, // Usando el color primario
@@ -97,7 +97,7 @@ class _ChatPageState extends State<ChatPage> {
                 : Row(
                     children: [
                       IconButton(
-                        icon: Icon(Icons.arrow_back, color: SystemColors.primaryBlue),
+                        icon: const Icon(Icons.arrow_back, color: SystemColors.primaryBlue),
                         onPressed: _goBackToChats, // Llamar la función para retroceder
                       ),
                       CircleAvatar(
@@ -106,7 +106,7 @@ class _ChatPageState extends State<ChatPage> {
                       const SizedBox(width: 8),
                       Text(
                         _currentStudent!.nombre,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: SystemColors.primaryBlue,
@@ -129,7 +129,7 @@ class _ChatPageState extends State<ChatPage> {
                         ),
                         title: Text(
                           estudiantes[index].nombre,
-                          style: TextStyle(color: SystemColors.primaryGreenDark,  fontSize: 20, fontWeight: FontWeight.bold),
+                          style: const TextStyle(color: SystemColors.primaryGreenDark,  fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         onTap: () {
                           _startChat(estudiantes[index]);
@@ -144,8 +144,8 @@ class _ChatPageState extends State<ChatPage> {
                       return Align(
                         alignment: isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
                         child: Container(
-                          margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                          margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
                           decoration: BoxDecoration(
                             color: isUserMessage ? Colors.grey[300] : SystemColors.primaryBlue,
                             borderRadius: BorderRadius.circular(20),
@@ -167,6 +167,7 @@ class _ChatPageState extends State<ChatPage> {
           if (_currentChatStudent != null)
             Padding(
               padding: const EdgeInsets.all(8.0),
+              // ignore: deprecated_member_use
               child: RawKeyboardListener(
                 onKey: _onKey, // Capturamos la tecla presionada
                 focusNode: FocusNode(), // Necesario para que el teclado capture la entrada
@@ -177,21 +178,21 @@ class _ChatPageState extends State<ChatPage> {
                         controller: _controller,
                         decoration: InputDecoration(
                           hintText: 'Escribe un mensaje...',
-                          hintStyle: TextStyle(color: SystemColors.neutralMedium),
+                          hintStyle: const TextStyle(color: SystemColors.neutralMedium),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(color: SystemColors.neutralMedium),
+                            borderSide: const BorderSide(color: SystemColors.neutralMedium),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(color: SystemColors.labelActive),
+                            borderSide: const BorderSide(color: SystemColors.labelActive),
                           ),
                         ),
                       ),
                     ),
                     IconButton(
                       onPressed: _sendMessage,
-                      icon: Icon(Icons.send, color: SystemColors.primaryBlue), // Color del icono
+                      icon: const Icon(Icons.send, color: SystemColors.primaryBlue), // Color del icono
                     ),
                   ],
                 ),

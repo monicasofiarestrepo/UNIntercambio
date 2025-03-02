@@ -8,7 +8,7 @@ class BottomNavBar extends StatelessWidget {
   const BottomNavBar({super.key, required this.currentIndex});
 
   void _onItemTapped(BuildContext context, int index) {
-    const routes = ['/home', '/info', '/chat', '/profile'];
+    const routes = ['/home', '/convocatorias', '/chat', '/profile'];
 
     if (currentIndex != index) {
       Navigator.pushReplacementNamed(context, routes[index]);
@@ -24,10 +24,14 @@ class BottomNavBar extends StatelessWidget {
       selectedItemColor: SystemColors.primaryBlue,
       unselectedItemColor: SystemColors.neutralMedium,
       items: const [
-        BottomNavigationBarItem(icon: Icon(UNintercambioIcons.home_1), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(UNintercambioIcons.book_open), label: 'Info'),
-        BottomNavigationBarItem(icon: Icon(UNintercambioIcons.chat_1), label: 'Chat'),
-        BottomNavigationBarItem(icon: Icon(UNintercambioIcons.user), label: 'Profile'),
+        BottomNavigationBarItem(
+            icon: Icon(UNintercambioIcons.home_1), label: 'Home'),
+        BottomNavigationBarItem(
+            icon: Icon(UNintercambioIcons.book_open), label: 'Convocatorias'),
+        BottomNavigationBarItem(
+            icon: Icon(UNintercambioIcons.chat_1), label: 'Chat'),
+        BottomNavigationBarItem(
+            icon: Icon(UNintercambioIcons.user), label: 'Profile'),
       ],
     );
   }

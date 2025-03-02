@@ -24,20 +24,20 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
         border: Border.all(color: SystemColors.neutralDark, width: 1.5),
         borderRadius: BorderRadius.circular(4),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: DropdownButtonFormField<String>(
         value: selectedCurrency,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           border: InputBorder.none,
         ),
-        icon: Icon(Icons.arrow_drop_down),
+        icon: const Icon(Icons.arrow_drop_down),
         items: currencies.map((currency) {
           return DropdownMenuItem<String>(
             value: currency["code"],
             child: Row(
               children: [
-                Text(currency["flag"]!, style: TextStyle(fontSize: 18)),
-                SizedBox(width: 8),
+                Text(currency["flag"]!, style: const TextStyle(fontSize: 18)),
+                const SizedBox(width: 8),
                 Text("${currency["code"]} - ${currency["name"]}"),
               ],
             ),

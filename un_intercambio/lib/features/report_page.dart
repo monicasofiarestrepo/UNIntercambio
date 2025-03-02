@@ -13,12 +13,12 @@ class ReportPage extends StatelessWidget {
         title: Text(title),
         backgroundColor: Colors.teal,
       ),
-      bottomNavigationBar: BottomNavBar(currentIndex: 2),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      bottomNavigationBar: const BottomNavBar(currentIndex: 2),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Text(
               'Reportes',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),

@@ -4,7 +4,7 @@ import 'package:un_intercambio/features/candidatos_page.dart';
 class DetallesCandidatoPage extends StatelessWidget {
   final Candidato candidato;
 
-  DetallesCandidatoPage({super.key, required this.candidato});
+  const DetallesCandidatoPage({super.key, required this.candidato});
 
   @override
   Widget build(BuildContext context) {

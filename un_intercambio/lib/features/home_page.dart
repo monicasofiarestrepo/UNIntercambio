@@ -21,9 +21,9 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 120),
-            Center(
+            const Center(
               child: Column(
-                children: const [
+                children: [
                   Text(
                     'Hola Patricia',
                     style: TextStyle(
@@ -54,9 +54,9 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
+              children: [
                 IconColumn(icon: Icons.assignment, label: 'Convocatorias', route: '/convocatorias'),
                 IconColumn(icon: Icons.people, label: 'Evaluación', route: '/evaluation'),
                 IconColumn(icon: Icons.bar_chart, label: 'Reportes', route: '/reports'),

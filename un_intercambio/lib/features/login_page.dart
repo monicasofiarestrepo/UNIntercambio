@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:un_intercambio/features/base_page.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +11,13 @@ class LoginPage extends StatelessWidget {
 
     void _login() {
       // TODO: Lógica de inicio de sesión
+
+      //Enviar a la página de home
+      Navigator.pushNamed(context, '/home');
     }
 
-    void _goToHome() {
-      Navigator.pushNamed(context, '/home');
+    void _goToRegister() {
+      Navigator.pushNamed(context, '/register');
     }
 
     return BasePage(
@@ -38,14 +41,14 @@ class LoginPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               ElevatedButton(onPressed: _login, child: const Text('Ingresar')),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: _goToRegister,
+                child: const Text('Crear estudiante'),
+              ),
               TextButton(
                 onPressed: () => Navigator.pushNamed(context, '/recover'),
                 child: const Text('¿Olvidaste tu contraseña?'),
-              ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: _goToHome,
-                child: const Text('Ir al Home'),
               ),
             ],
           ),

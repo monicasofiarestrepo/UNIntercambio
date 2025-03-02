@@ -11,7 +11,7 @@ import 'package:un_intercambio/features/report_page.dart';
 import 'package:un_intercambio/features/form_convocatoria_page.dart';
 import 'package:un_intercambio/features/register_page.dart';
 import 'package:un_intercambio/features/recover_account_page.dart';
-import 'package:un_intercambio/services/auth_provider.dart';
+import 'package:un_intercambio/data/services/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -36,8 +36,8 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => const AuthWrapper(),
           '/login': (context) => const LoginPage(),
-          '/register': (context) => RegisterPage(),
-          '/recover': (context) => RecoverAccountPage(),
+          '/register': (context) => const RegisterPage(title: "Registro"),
+          '/recover': (context) => const RecoverAccountPage(),
           '/home': (context) => const HomePage(title: 'UNintercambio Home'),
           '/info': (context) => const InfoPage(title: 'Información'),
           '/chat': (context) => const ChatPage(title: 'Chat'),
@@ -45,8 +45,8 @@ class MyApp extends StatelessWidget {
           '/metrics': (context) => const MetricPage(title: 'Métricas'),
           '/reports': (context) => const ReportPage(title: 'Reportes'),
           '/calendar': (context) => const CalendarPage(title: 'Calendario'),
-          '/convocatorias': (context) => ConvocatoriaPage(title: 'Convocatorias'),
-          '/formularioConvocatorias': (context) => FormularioConvocatoriaPage(),
+          '/convocatorias': (context) => const ConvocatoriaPage(title: 'Convocatorias'),
+          '/formularioConvocatorias': (context) => const FormularioConvocatoriaPage(),
         },
       ),
     );

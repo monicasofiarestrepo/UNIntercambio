@@ -76,8 +76,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                      
                       ),
                       child: _archivos.isEmpty
-                          ? Column(
-                              children: const [
+                          ? const Column(
+                              children:  [
                                 Icon(Icons.upload_file, size: 40),
                                 Text('Hoja de vida', style: TextStyle(fontSize: 16)),
                               ],

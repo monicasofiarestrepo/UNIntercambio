@@ -41,7 +41,7 @@ class CandidatosPage extends StatelessWidget {
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: SystemColors.neutralMedium),
+                  borderSide: const BorderSide(color: SystemColors.neutralMedium),
                 ),
               ),
               // Aquí podrías implementar la búsqueda de candidatos.
@@ -55,7 +55,7 @@ class CandidatosPage extends StatelessWidget {
                   return Card(
                     margin: const EdgeInsets.symmetric(vertical: 8.0),
                     child: ListTile(
-                      leading: CircleAvatar(child: Icon(Icons.person)),
+                      leading: const CircleAvatar(child: Icon(Icons.person)),
                       title: Text(candidato.nombre),
                       subtitle: Text("Programa: ${candidato.programa} | Semestre: ${candidato.semestre}"),
                       trailing: IconButton(

@@ -7,12 +7,12 @@ class OptionCard extends StatelessWidget {
   final String route; // Nueva propiedad para la ruta
 
   const OptionCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.subtitle,
     required this.icon,
     required this.route, // Ruta requerida
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

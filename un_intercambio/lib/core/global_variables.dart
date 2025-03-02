@@ -1,1 +1,1 @@
-final bool isEstudiante = false;
+const bool isEstudiante = false;

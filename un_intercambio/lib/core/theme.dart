@@ -21,6 +21,7 @@ class SystemColors {
   static const Color labelError2 = Color(0xffdd8080);
   static const Color labelWarning = Color(0xffffad39);
   static const Color labelWarning2 = Color(0xffffc472);
+  static const Color primaryViolet = Color(0xFF575988);
 }
 
 class AppTheme {
@@ -28,18 +29,24 @@ class AppTheme {
     return ThemeData(
       primaryColor: SystemColors.primaryBlue,
       scaffoldBackgroundColor: SystemColors.neutralBackground,
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         backgroundColor: SystemColors.primaryBlue,
         foregroundColor: SystemColors.neutralBackground,
         elevation: 0,
       ),
-      textTheme: TextTheme(
-        headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: SystemColors.jetBlack),
-        headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: SystemColors.neutralDark),
+      textTheme: const TextTheme(
+        headlineLarge: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            color: SystemColors.jetBlack),
+        headlineMedium: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: SystemColors.neutralDark),
         bodyMedium: TextStyle(fontSize: 16, color: SystemColors.neutralDark),
         bodySmall: TextStyle(fontSize: 14, color: SystemColors.neutralMedium),
       ),
-      buttonTheme: ButtonThemeData(
+      buttonTheme: const ButtonThemeData(
         buttonColor: SystemColors.primaryGreenDark,
         textTheme: ButtonTextTheme.primary,
       ),
@@ -57,18 +64,18 @@ class AppTheme {
         fillColor: SystemColors.neutralBackground1,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: SystemColors.neutralMedium),
+          borderSide: const BorderSide(color: SystemColors.neutralMedium),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: SystemColors.labelActive),
+          borderSide: const BorderSide(color: SystemColors.labelActive),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: SystemColors.labelError),
+          borderSide: const BorderSide(color: SystemColors.labelError),
         ),
       ),
-      iconTheme: IconThemeData(color: SystemColors.primaryPrink),
+      iconTheme: const IconThemeData(color: SystemColors.primaryPrink),
     );
   }
 }

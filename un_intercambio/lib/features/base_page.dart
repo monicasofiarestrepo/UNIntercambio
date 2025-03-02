@@ -8,12 +8,12 @@ class BasePage extends StatelessWidget {
   final String backgroundImageRoute;
 
   const BasePage({
-    Key? key,
+    super.key,
     this.currentIndex,
     required this.child,
     this.showBottomNavBar = true, // Por defecto se muestra el BottomNavBar
     this.backgroundImageRoute = "assets/images/noLogoBackground.png",
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

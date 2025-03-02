@@ -19,7 +19,7 @@ class FormularioConvocatoriaPage extends StatefulWidget {
   const FormularioConvocatoriaPage({super.key}); 
 
   @override
-  _FormularioConvocatoriaPageState createState() => _FormularioConvocatoriaPageState();
+  State<FormularioConvocatoriaPage> createState() => _FormularioConvocatoriaPageState();
 }
 
 class _FormularioConvocatoriaPageState extends State<FormularioConvocatoriaPage> {
@@ -61,7 +61,7 @@ class _FormularioConvocatoriaPageState extends State<FormularioConvocatoriaPage>
               SingleChildScrollView(  
                 child: DropdownButtonFormField<String>(
                   value: _tipoConvocatoria,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Tipo de Convocatoria',
                     prefixIcon: Icon(Icons.event),
                     border: OutlineInputBorder(),
@@ -80,52 +80,52 @@ class _FormularioConvocatoriaPageState extends State<FormularioConvocatoriaPage>
                   },
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Campo para Título
               IconTextField(
                 controller: _tituloController,
                 label: 'Título',
-                prefixIcon: Icon(Icons.title),
-                suffixIcon: Icon(Icons.clear),
+                prefixIcon: const Icon(Icons.title),
+                suffixIcon: const Icon(Icons.clear),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Campo para Descripción Breve
               IconTextField(
                 controller: _descripcionController,
                 label: 'Descripción breve',
-                prefixIcon: Icon(Icons.description),
-                suffixIcon: Icon(Icons.clear),
+                prefixIcon: const Icon(Icons.description),
+                suffixIcon: const Icon(Icons.clear),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Campo para Requisitos
               IconTextField(
                 controller: _requisitosController,
                 label: 'Requisitos',
-                prefixIcon: Icon(Icons.list),
-                suffixIcon: Icon(Icons.clear),
+                prefixIcon: const Icon(Icons.list),
+                suffixIcon: const Icon(Icons.clear),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Campo para Duración
               IconTextField(
                 controller: _duracionController,
                 label: 'Duración',
-                prefixIcon: Icon(Icons.access_time),
-                suffixIcon: Icon(Icons.clear),
+                prefixIcon: const Icon(Icons.access_time),
+                suffixIcon: const Icon(Icons.clear),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Campo para Lugar
               IconTextField(
                 controller: _lugarController,
                 label: 'Lugar',
-                prefixIcon: Icon(Icons.location_on),
-                suffixIcon: Icon(Icons.clear),
+                prefixIcon: const Icon(Icons.location_on),
+                suffixIcon: const Icon(Icons.clear),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Campo para Fecha
               GestureDetector(
@@ -144,7 +144,7 @@ class _FormularioConvocatoriaPageState extends State<FormularioConvocatoriaPage>
                 },
                 child: TextField(
                   controller: _fechaController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Fecha',
                     prefixIcon: Icon(Icons.calendar_today),
                     suffixIcon: Icon(Icons.clear),
@@ -152,20 +152,20 @@ class _FormularioConvocatoriaPageState extends State<FormularioConvocatoriaPage>
                   readOnly: true, // Esto evita que el usuario edite el campo manualmente
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Caja para arrastrar o seleccionar archivos
               GestureDetector(
                 onTap: _seleccionarArchivos,
                 child: Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.blue[50],
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: Colors.blue),
                   ),
                   child: _archivos.isEmpty
-                      ? Column(
+                      ? const Column(
                           children: [
                             Icon(Icons.upload_file, size: 40),
                             Text('Arrastra o selecciona archivos', style: TextStyle(fontSize: 16)),
@@ -174,13 +174,13 @@ class _FormularioConvocatoriaPageState extends State<FormularioConvocatoriaPage>
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(Icons.check_circle, color: Colors.green, size: 40),
-                            Text('Archivos seleccionados: ${_archivos.length}', style: TextStyle(fontSize: 16)),
+                            const Icon(Icons.check_circle, color: Colors.green, size: 40),
+                            Text('Archivos seleccionados: ${_archivos.length}', style: const TextStyle(fontSize: 16)),
                           ],
                         ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Botón para registrar
               PrimaryButton(
@@ -189,7 +189,7 @@ class _FormularioConvocatoriaPageState extends State<FormularioConvocatoriaPage>
                   print('Formulario enviado');
                   // Aquí puedes agregar la lógica para procesar los datos
                 },
-                child: Text('Registrar'),
+                child: const Text('Registrar'),
               ),
             ],
           ),

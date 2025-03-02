@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:un_intercambio/features/base_page.dart';
 
 class RecoverAccountPage extends StatelessWidget {
-  const RecoverAccountPage({Key? key}) : super(key: key);
+  const RecoverAccountPage({super.key});
 
   @override
   Widget build(BuildContext context) {
