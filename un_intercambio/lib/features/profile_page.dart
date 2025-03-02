@@ -1,44 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:un_intercambio/features/base_page.dart';
+import 'package:un_intercambio/data/providers/usuario_provider.dart';
+import 'package:un_intercambio/data/models/usuario.dart';
 
-class UserProfilePage extends StatefulWidget {
+// Página de perfil de usuario que usa Riverpod para obtener datos desde la API
+class UserProfilePage extends ConsumerStatefulWidget {
   final String title;
 
   const UserProfilePage({super.key, required this.title});
 
   @override
-  State<UserProfilePage> createState() => _UserProfilePageState();
+  ConsumerState<UserProfilePage> createState() => _UserProfilePageState();
 }
 
-class _UserProfilePageState extends State<UserProfilePage> {
-  List<PlatformFile> _archivos = [];
+class _UserProfilePageState extends ConsumerState<UserProfilePage> {
+  List<PlatformFile> _archivos = []; // Lista para almacenar archivos seleccionados
 
+  // Método para seleccionar archivos usando FilePicker
   Future<void> _seleccionarArchivos() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: true, // Permite seleccionar múltiples archivos
+      allowMultiple: true,
     );
 
     if (result != null) {
       setState(() {
-        _archivos = result.files; // Guardamos los archivos seleccionados
+        _archivos = result.files;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    // Escuchar el estado del provider usuarioProvider
+    final usuarioAsyncValue = ref.watch(usuarioProvider);
+
     return BasePage(
-      currentIndex: 3,
+      currentIndex: 3, // Índice actual en la barra de navegación
       child: Center(
         child: Column(
           children: [
             const SizedBox(height: 100),
-            const Text(
-              "Estudiante 1",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            // Mostrar nombre del usuario si los datos están disponibles
+            usuarioAsyncValue.when(
+              data: (usuarios) {
+                if (usuarios.isEmpty) return const Text("No se encontraron usuarios");
+                final Usuario usuario = usuarios.first;
+                return Text(
+                  usuario.nombre,
+                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                );
+              },
+              loading: () => const CircularProgressIndicator(), // Indicador de carga
+              error: (_, __) => const Text("Error al cargar usuario"),
             ),
             const SizedBox(height: 30),
+            // Contenedor con información del usuario
             Container(
               width: 380,
               height: 550,
@@ -47,54 +65,65 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 color: Colors.grey.shade100,
               ),
               padding: const EdgeInsets.all(30),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Image.asset(
-                      'assets/images/avatar2.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  const InfoText(label: "Promedio", value: "4.8"),
-                  const InfoText(label: "Avance", value: "81%"),
-                  const InfoText(label: "Carrera", value: "Ing. Administrativa"),
-                  const InfoText(label: "Idiomas", value: "Inglés B1 y portugués A2"),
-                  const InfoText(label: "Correo", value: "estudiantosa@unal.edu.co"),
-                  const InfoText(label: "Celular", value: "3044833098"),
+              child: usuarioAsyncValue.when(
+                data: (usuarios) {
+                  if (usuarios.isEmpty) return const Center(child: Text("No hay datos"));
 
-                  // Botón de carga de archivos
-                    Center(child:                  
-                    GestureDetector(
-                    onTap: _seleccionarArchivos,
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                       
-                        borderRadius: BorderRadius.circular(8),
-                     
+                  final Usuario usuario = usuarios.first;
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Imagen de avatar
+                      Center(
+                        child: Image.asset(
+                          'assets/images/avatar2.png',
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      child: _archivos.isEmpty
-                          ? const Column(
-                              children:  [
-                                Icon(Icons.upload_file, size: 40),
-                                Text('Hoja de vida', style: TextStyle(fontSize: 16)),
-                              ],
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Icon(Icons.check_circle, color: Colors.green, size: 40),
-                                Text(
-                                  'Archivos seleccionados: ${_archivos.length}',
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                              ],
+                      // Información del usuario
+                      InfoText(label: "Correo", value: usuario.correo), //viene del endpoint de riverpod
+                      InfoText(label: "Tipo de Usuario", value: usuario.tipoUsuario), //viene del endpoint de riverpod
+                      const InfoText(label: "Promedio", value: "4.8"), //estatico porque el endpoint no lo trae 
+                      const InfoText(label: "Avance", value: "81%"),
+                      const InfoText(label: "Carrera", value: "Ing. Administrativa"),
+                      const InfoText(label: "Idiomas", value: "Inglés B1 y portugués A2"),
+                      const InfoText(label: "Celular", value: "3044833098"),
+
+                      // Botón para subir archivos
+                      Center(
+                        child: GestureDetector(
+                          onTap: _seleccionarArchivos,
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                    ),
-                  ),)
-                ],
+                            child: _archivos.isEmpty
+                                ? const Column(
+                                    children: [
+                                      Icon(Icons.upload_file, size: 40),
+                                      Text('Hoja de vida', style: TextStyle(fontSize: 16)),
+                                    ],
+                                  )
+                                : Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const Icon(Icons.check_circle, color: Colors.green, size: 40),
+                                      Text(
+                                        'Archivos seleccionados: ${_archivos.length}',
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                loading: () => const Center(child: CircularProgressIndicator()), // Indicador de carga
+                error: (_, __) => const Center(child: Text("Error al cargar usuario")),
               ),
             ),
           ],

@@ -31,6 +31,7 @@ dependencies:
   # Estado y gestión de dependencias con Riverpod y Provider
   flutter_riverpod: ^2.4.9
   provider: 6.1.2
+  dio: ^5.4.0
 
   # Serialización y generación de código
   freezed_annotation: ^2.4.1

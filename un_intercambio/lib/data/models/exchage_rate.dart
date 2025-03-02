@@ -1,15 +1,16 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+class ExchangeRate {
+  final String baseCode;
+  final Map<String, double> conversionRates;
 
-part 'exchange_rate.freezed.dart';
-part 'exchange_rate.g.dart';
+  ExchangeRate({
+    required this.baseCode,
+    required this.conversionRates,
+  });
 
-@freezed
-class ExchangeRate with _$ExchangeRate {
-  factory ExchangeRate({
-    required String base_code,
-    required Map<String, double> conversion_rates,
-  }) = _ExchangeRate;
-
-  factory ExchangeRate.fromJson(Map<String, dynamic> json) =>
-      _$ExchangeRateFromJson(json);
+  factory ExchangeRate.fromJson(Map<String, dynamic> json) {
+    return ExchangeRate(
+      baseCode: json['base_code'],
+      conversionRates: Map<String, double>.from(json['conversion_rates']),
+    );
+  }
 }

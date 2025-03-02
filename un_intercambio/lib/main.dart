@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
+import 'package:provider/provider.dart';
 import 'package:un_intercambio/features/convocatoria_page.dart';
 import 'package:un_intercambio/features/calendar_page.dart';
 import 'package:un_intercambio/features/chat_page.dart';
@@ -12,10 +14,13 @@ import 'package:un_intercambio/features/form_convocatoria_page.dart';
 import 'package:un_intercambio/features/register_page.dart';
 import 'package:un_intercambio/features/recover_account_page.dart';
 import 'package:un_intercambio/data/services/auth_provider.dart';
-import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const riverpod.ProviderScope( // 🔹 ProviderScope para Riverpod
+      child:  MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
