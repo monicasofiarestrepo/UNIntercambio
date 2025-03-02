@@ -17,6 +17,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BasePage(
+      backgroundImageRoute: 'assets/images/backgroundWithLogo.png',
       currentIndex: 0, // Índice de la barra de navegación para esta página
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -50,7 +51,7 @@ class Home extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 80),
+            const SizedBox(height: 100),
             // Bienvenida y descripción de la app
             const Center(
               child: Column(
@@ -130,23 +131,23 @@ class Home extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
             // Iconos de acceso rápido
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 IconColumn(
                     icon: Icons.article,
-                    label: 'Convocatorias disponibles',
+                    label: 'Convocatorias',
                     route: '/convocatorias-student'),
                 IconColumn(
                   icon: Icons.folder,
-                  label: 'Documentos guardados',
+                  label: 'Documentos',
                   route: '/',
                 ),
               ],
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
             // Opciones de la app
             Expanded(
               child: ListView(
@@ -155,7 +156,7 @@ class Home extends StatelessWidget {
                     title: 'Calendario',
                     subtitle: 'Fechas relevantes de tus convocatorias',
                     icon: Icons.calendar_month,
-                    route: '/',
+                    route: '/calendar',
                   ),
                   OptionCard(
                     title: 'Conversor de divisas',
