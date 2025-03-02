@@ -17,3 +17,5 @@ final isEstudianteProvider = StateProvider<bool>((ref) {
 bool getIsEstudiante(WidgetRef ref) {
   return ref.read(isEstudianteProvider);
 }
+
+final emailUserProvider = StateProvider<String>((ref) => '');

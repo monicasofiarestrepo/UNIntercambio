@@ -80,6 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return BasePage(
+      backgroundImageRoute: 'assets/images/backgroundWithLogo.png',
       showBottomNavBar: false,
       child: Center(
         child: Padding(

@@ -14,6 +14,7 @@ import 'package:un_intercambio/features/form_convocatoria_page.dart';
 import 'package:un_intercambio/features/register_page.dart';
 import 'package:un_intercambio/features/recover_account_page.dart';
 import 'package:un_intercambio/data/services/auth_provider.dart';
+import 'package:un_intercambio/features/student/home_estudiante_page.dart';
 
 void main() {
   runApp(
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
           '/register': (context) => const RegisterPage(title: "Registro"),
           '/recover': (context) => const RecoverAccountPage(),
           '/home': (context) => const HomePage(title: 'UNintercambio Home'),
+          '/home-student': (context) => const Home(),
           '/info': (context) => const InfoPage(title: 'Información'),
           '/chat': (context) => const ChatPage(title: 'Chat'),
           '/profile': (context) => const UserProfilePage(title: 'Perfil'),
