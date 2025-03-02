@@ -18,4 +18,4 @@ bool getIsEstudiante(WidgetRef ref) {
   return ref.read(isEstudianteProvider);
 }
 
-final emailUserProvider = StateProvider<String>((ref) => '');
+final emailUserProvider = StateProvider<String>((ref) => ''); //en el login se actualiza con el email del usuario

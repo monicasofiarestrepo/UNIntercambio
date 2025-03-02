@@ -15,4 +15,17 @@ class UsuarioRepository {
       throw Exception('Error al obtener usuarios');
     }
   }
+
+  // 🔹 Nuevo método para obtener un solo usuario basado en el correo
+  Future<Usuario?> fetchUsuarioPorCorreo(String correo) async {
+    final Uri url = Uri.parse('$_baseUrl/buscar?correo=$correo');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      return Usuario.fromJson(data);
+    } else {
+      return null; // Si no se encuentra el usuario, retorna null
+    }
+  }
 }

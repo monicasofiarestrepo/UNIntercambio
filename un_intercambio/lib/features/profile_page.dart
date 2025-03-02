@@ -33,8 +33,8 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    // Escuchar el estado del provider usuarioProvider
-    final usuarioAsyncValue = ref.watch(usuarioProvider);
+    // Ahora se usa usuarioActualProvider en lugar de usuarioProvider
+    final usuarioAsyncValue = ref.watch(usuarioActualProvider);
 
     return BasePage(
       currentIndex: 3, // Índice actual en la barra de navegación
@@ -44,9 +44,8 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
             const SizedBox(height: 100),
             // Mostrar nombre del usuario si los datos están disponibles
             usuarioAsyncValue.when(
-              data: (usuarios) {
-                if (usuarios.isEmpty) return const Text("No se encontraron usuarios");
-                final Usuario usuario = usuarios.first;
+              data: (usuario) {
+                if (usuario == null) return const Text("Usuario no encontrado");
                 return Text(
                   usuario.nombre,
                   style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -66,10 +65,9 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
               ),
               padding: const EdgeInsets.all(30),
               child: usuarioAsyncValue.when(
-                data: (usuarios) {
-                  if (usuarios.isEmpty) return const Center(child: Text("No hay datos"));
+                data: (usuario) {
+                  if (usuario == null) return const Center(child: Text("No hay datos"));
 
-                  final Usuario usuario = usuarios.first;
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,9 +80,9 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
                         ),
                       ),
                       // Información del usuario
-                      InfoText(label: "Correo", value: usuario.correo), //viene del endpoint de riverpod
-                      InfoText(label: "Tipo de Usuario", value: usuario.tipoUsuario), //viene del endpoint de riverpod
-                      const InfoText(label: "Promedio", value: "4.8"), //estatico porque el endpoint no lo trae 
+                      InfoText(label: "Correo", value: usuario.correo), // viene del endpoint de Riverpod
+                      InfoText(label: "Tipo de Usuario", value: usuario.tipoUsuario), // viene del endpoint de Riverpod
+                      const InfoText(label: "Promedio", value: "4.8"), // Estático porque el endpoint no lo trae 
                       const InfoText(label: "Avance", value: "81%"),
                       const InfoText(label: "Carrera", value: "Ing. Administrativa"),
                       const InfoText(label: "Idiomas", value: "Inglés B1 y portugués A2"),
