@@ -62,7 +62,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             ref.read(emailUserProvider.notifier).state = emailFromDB;
 
             // Redirigir según el tipo de usuario
-            print('Correo guardado en emailUserProvider: ${ref.read(emailUserProvider)}');
             if (userType == 'admin') {
               Navigator.pushNamed(context, '/home');
             } else if (userType == 'student') {
