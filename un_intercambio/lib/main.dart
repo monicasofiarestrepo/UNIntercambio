@@ -11,6 +11,7 @@ import 'package:un_intercambio/features/info_page.dart';
 import 'package:un_intercambio/features/login_page.dart';
 import 'package:un_intercambio/features/metric_page.dart';
 import 'package:un_intercambio/features/profile_page.dart';
+import 'package:un_intercambio/features/admin_profile_page.dart';
 import 'package:un_intercambio/features/report_page.dart';
 import 'package:un_intercambio/features/form_convocatoria_page.dart';
 import 'package:un_intercambio/features/register_page.dart';
@@ -52,10 +53,10 @@ class MyApp extends StatelessWidget {
           //'/home': (context) => const HomePage(title: 'UNintercambio Home'),
           //'/home-student': (context) => const Home(),
           //'/convocatorias-student': (context) => const ConvocatoriaEstudiantePage(),
+          //'/profile': (context) => UserProfilePage(title: 'Perfil'),
           '/cambio-moneda': (context) => const CurrencyConverterScreen(),
           '/info': (context) => const InfoPage(title: 'Información'),
           '/chat': (context) => const ChatPage(title: 'Chat'),
-          '/profile': (context) => UserProfilePage(title: 'Perfil'),
           '/metrics': (context) => const MetricPage(title: 'Métricas'),
           '/reports': (context) => const ReportPage(title: 'Reportes'),
           '/calendar': (context) => const CalendarPage(title: 'Calendario'),
@@ -80,6 +81,15 @@ class MyApp extends StatelessWidget {
                   return isEstudiante
                       ? const ConvocatoriaEstudiantePage()
                       : const ConvocatoriaPage(title: 'Convocatorias');
+                },
+              ),
+          '/profile': (context) => riverpod.Consumer(
+                builder: (context, ref, child) {
+                  final isEstudiante = ref.watch(isEstudianteProvider);
+
+                  return isEstudiante
+                      ? UserProfilePage(title: 'Perfil')
+                      : const AdminProfilePage(title: 'Perfil');
                 },
               ),
         },
