@@ -68,7 +68,7 @@ class Home extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: 'Luisa',
+                          text: 'Estudiante',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
