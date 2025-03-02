@@ -68,6 +68,7 @@ class ConvocatoriaEstudiantePageState
     final convocatoriasAsync = ref.watch(convocatoriaProvider);
 
     return BasePage(
+      backgroundImageRoute: 'assets/images/backgroundWithLogo.png',
       currentIndex: 1,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -98,7 +99,7 @@ class ConvocatoriaEstudiantePageState
                 ],
               ),
             ),
-            const SizedBox(height: 80),
+            const SizedBox(height: 100),
             const Center(
               child: Text(
                 'Convocatorias',
@@ -159,31 +160,41 @@ class ConvocatoriaEstudiantePageState
                               Text("Estado: ${convocatoria.estado}"),
                             ],
                           ),
-                          trailing: Column(
-                            children: [
-                              TextButton(
-                                onPressed: () =>
-                                    guardarConvocatoria(convocatoria),
-                                child: const Text(
-                                  'Guardar',
-                                  style: TextStyle(
-                                    color: SystemColors.primaryViolet,
-                                    fontWeight: FontWeight.bold,
+                          trailing: SizedBox(
+                            width: 80, // Ajusta el ancho según sea necesario
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: TextButton(
+                                    onPressed: () =>
+                                        guardarConvocatoria(convocatoria),
+                                    child: const Text(
+                                      'Guardar',
+                                      style: TextStyle(
+                                        color: SystemColors.primaryViolet,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              TextButton(
-                                onPressed: () =>
-                                    postularConvocatoria(convocatoria),
-                                child: const Text(
-                                  'Postular',
-                                  style: TextStyle(
-                                    color: SystemColors.primaryBlue,
-                                    fontWeight: FontWeight.bold,
+                                const SizedBox(
+                                    height: 12), // Espaciado vertical
+                                Expanded(
+                                  child: TextButton(
+                                    onPressed: () =>
+                                        postularConvocatoria(convocatoria),
+                                    child: const Text(
+                                      'Postular',
+                                      style: TextStyle(
+                                        color: SystemColors.primaryBlue,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       );

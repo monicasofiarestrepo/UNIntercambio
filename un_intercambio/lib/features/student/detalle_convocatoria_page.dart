@@ -16,6 +16,7 @@ class DetalleConvocatoriaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BasePage(
+      backgroundImageRoute: 'assets/images/backgroundWithLogo.png',
       currentIndex: 1,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -58,7 +59,7 @@ class DetalleConvocatoriaPage extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 50),
             Text(
               convocatoria.nombre,
               style: const TextStyle(
@@ -66,7 +67,7 @@ class DetalleConvocatoriaPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 10),
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
@@ -74,83 +75,73 @@ class DetalleConvocatoriaPage extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //_detalleItem(
-                    //Icons.school, "Institución", convocatoria.institucion),
-                    _detalleItem(Icons.category, "Tipo", convocatoria.tipo),
-                    _detalleItem(Icons.language, "Nivel Idioma",
-                        convocatoria.nivelIdioma),
-                    _detalleItem(Icons.timeline, "Promedio",
-                        convocatoria.promedioMinimo.toString()),
-                    _detalleItem(Icons.date_range, "Fechas",
-                        "${convocatoria.fechaInicio.toString()} - ${convocatoria.fechaFin.toString()}"),
-                    _detalleItem(Icons.description, "Descripción",
-                        convocatoria.descripcion,
-                        multiline: true),
-                    _detalleItem(
-                        Icons.assignment, "Requisitos", convocatoria.requisitos,
-                        multiline: true),
-                    _detalleItem(Icons.card_giftcard, "Beneficios",
-                        convocatoria.beneficios,
-                        multiline: true),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16)),
-                    child: const Text(
-                      "Reviews",
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: SystemColors.primaryPrink,
-                        fontWeight: FontWeight.bold,
-                      ),
+                child: SizedBox(
+                  height: 400, // Ajusta la altura según lo necesites
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _detalleItem(Icons.category, "Tipo", convocatoria.tipo),
+                        _detalleItem(Icons.language, "Nivel Idioma",
+                            convocatoria.nivelIdioma),
+                        _detalleItem(Icons.timeline, "Promedio",
+                            convocatoria.promedioMinimo.toString()),
+                        _detalleItem(Icons.date_range, "Fechas",
+                            "${DateFormat('dd/MM/yyyy').format(convocatoria.fechaInicio)} - ${DateFormat('dd/MM/yyyy').format(convocatoria.fechaFin)}"),
+                        _detalleItem(Icons.description, "Descripción",
+                            convocatoria.descripcion,
+                            multiline: true),
+                        _detalleItem(Icons.assignment, "Requisitos",
+                            convocatoria.requisitos,
+                            multiline: true),
+                        _detalleItem(Icons.card_giftcard, "Beneficios",
+                            convocatoria.beneficios,
+                            multiline: true),
+                      ],
                     ),
                   ),
                 ),
-                Expanded(
-                  child: TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16)),
-                    child: const Text(
-                      "Ir al Chat",
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: SystemColors.primaryGreenDark,
+              ),
+            ),
+
+            const SizedBox(height: 16),
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 10, // Espacio horizontal entre botones
+              runSpacing: 8, // Espacio vertical si se acomodan en varias líneas
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    "Reviews",
+                    style: TextStyle(
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                        color: SystemColors.primaryPrink),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    "Ir al Chat",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: SystemColors.primaryGreenDark),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    "Postularme",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: SystemColors.primaryBlue),
                   ),
                 ),
               ],
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () {},
-                style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16)),
-                child: const Text(
-                  "Postularme",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: SystemColors.primaryBlue,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+            )
           ],
         ),
       ),
