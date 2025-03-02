@@ -19,6 +19,7 @@ class Candidato {
 
   factory Candidato.fromJson(Map<String, dynamic> json) {
     return Candidato(
+      id: int.parse(json['id'].toString()), // Aquí corregimos el id
       nombre: json['nombre'] as String,
       programa: json['programa'] as String,
       semestre: json['semestre'].toString(),
