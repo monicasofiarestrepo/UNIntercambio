@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 import 'package:provider/provider.dart';
+import 'package:un_intercambio/core/global_variables.dart';
 import 'package:un_intercambio/features/convocatoria_page.dart';
 import 'package:un_intercambio/features/calendar_page.dart';
 import 'package:un_intercambio/features/chat_page.dart';
@@ -20,8 +21,9 @@ import 'package:un_intercambio/features/student/home_estudiante_page.dart';
 
 void main() {
   runApp(
-    const riverpod.ProviderScope( // 🔹 ProviderScope para Riverpod
-      child:  MyApp(),
+    const riverpod.ProviderScope(
+      // 🔹 ProviderScope para Riverpod
+      child: MyApp(),
     ),
   );
 }
@@ -46,9 +48,9 @@ class MyApp extends StatelessWidget {
           '/login': (context) => const LoginPage(),
           '/register': (context) => const RegisterPage(title: "Registro"),
           '/recover': (context) => const RecoverAccountPage(),
-          '/home': (context) => const HomePage(title: 'UNintercambio Home'),
-          '/home-student': (context) => const Home(),
-          '/convocatorias-student': (context) => const ConvocatoriaEstudiantePage(),
+          //'/home': (context) => const HomePage(title: 'UNintercambio Home'),
+          //'/home-student': (context) => const Home(),
+          //'/convocatorias-student': (context) => const ConvocatoriaEstudiantePage(),
           '/cambio-moneda': (context) => const CurrencyConverterScreen(),
           '/info': (context) => const InfoPage(title: 'Información'),
           '/chat': (context) => const ChatPage(title: 'Chat'),
@@ -56,8 +58,28 @@ class MyApp extends StatelessWidget {
           '/metrics': (context) => const MetricPage(title: 'Métricas'),
           '/reports': (context) => const ReportPage(title: 'Reportes'),
           '/calendar': (context) => const CalendarPage(title: 'Calendario'),
-          '/convocatorias': (context) => const ConvocatoriaPage(title: 'Convocatorias'),
-          '/formularioConvocatorias': (context) => const FormularioConvocatoriaPage(),
+          //'/convocatorias': (context) => const ConvocatoriaPage(title: 'Convocatorias'),
+          '/formularioConvocatorias': (context) =>
+              const FormularioConvocatoriaPage(),
+
+          '/home': (context) => riverpod.Consumer(
+                builder: (context, ref, child) {
+                  final isEstudiante = ref.watch(isEstudianteProvider);
+
+                  return isEstudiante
+                      ? const Home()
+                      : const HomePage(title: 'UNintercambio Home');
+                },
+              ),
+          '/convocatorias': (context) => riverpod.Consumer(
+                builder: (context, ref, child) {
+                  final isEstudiante = ref.watch(isEstudianteProvider);
+
+                  return isEstudiante
+                      ? const ConvocatoriaEstudiantePage()
+                      : const ConvocatoriaPage(title: 'Convocatorias');
+                },
+              ),
         },
       ),
     );
@@ -76,6 +98,8 @@ class AuthWrapper extends StatelessWidget {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
-    return authProvider.currentUser == null ? const LoginPage() : const HomePage(title: 'UNintercambio Home');
+    return authProvider.currentUser == null
+        ? const LoginPage()
+        : const HomePage(title: 'UNintercambio Home');
   }
 }

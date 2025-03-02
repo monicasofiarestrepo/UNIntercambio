@@ -22,8 +22,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   Future<void> _login() async {
     setState(() {
-      _emailError = _emailController.text.isEmpty ? 'Este campo es obligatorio' : null;
-      _passwordError = _passwordController.text.isEmpty ? 'Este campo es obligatorio' : null;
+      _emailError =
+          _emailController.text.isEmpty ? 'Este campo es obligatorio' : null;
+      _passwordError =
+          _passwordController.text.isEmpty ? 'Este campo es obligatorio' : null;
     });
 
     if (_emailError != null || _passwordError != null) {
@@ -65,7 +67,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             if (userType == 'admin') {
               Navigator.pushNamed(context, '/home');
             } else if (userType == 'student') {
-              Navigator.pushNamed(context, '/home-student');
+              Navigator.pushNamed(context, '/home');
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Tipo de usuario no reconocido')),

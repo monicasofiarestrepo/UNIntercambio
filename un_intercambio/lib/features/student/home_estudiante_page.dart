@@ -139,7 +139,7 @@ class Home extends StatelessWidget {
                 IconColumn(
                     icon: Icons.article,
                     label: 'Convocatorias',
-                    route: '/convocatorias-student'),
+                    route: '/convocatorias'),
                 IconColumn(
                   icon: Icons.folder,
                   label: 'Documentos',
