@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
           '/cambio-moneda': (context) => const CurrencyConverterScreen(),
           '/info': (context) => const InfoPage(title: 'Información'),
           '/chat': (context) => const ChatPage(title: 'Chat'),
-          '/profile': (context) => const UserProfilePage(title: 'Perfil'),
+          '/profile': (context) => UserProfilePage(title: 'Perfil'),
           '/metrics': (context) => const MetricPage(title: 'Métricas'),
           '/reports': (context) => const ReportPage(title: 'Reportes'),
           '/calendar': (context) => const CalendarPage(title: 'Calendario'),
