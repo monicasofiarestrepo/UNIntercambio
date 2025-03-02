@@ -1,44 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:un_intercambio/core/icon_column.dart';
 import 'package:un_intercambio/core/option_card.dart';
 import 'package:un_intercambio/features/base_page.dart';
+import 'package:un_intercambio/data/providers/usuario_provider.dart';
 
-//TODO revisar si se pueden utilizar widgets o colores ya creados
-//TODO Añadir lo de que depende de si usuario o admin
-
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   final String title;
 
   const HomePage({super.key, required this.title});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final usuarioAsync = ref.watch(usuarioProvider);
+
     return BasePage(
       backgroundImageRoute: 'assets/images/backgroundWithLogo.png',
-      currentIndex: 0, // Índice de la barra de navegación para esta página
+      currentIndex: 0,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             const SizedBox(height: 120),
-            const Center(
-              child: Column(
-                children: [
-                  Text(
-                    'Hola Patricia',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.pink,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Bienvenida a UNIntercambio, la página para que gestiones las convocatorias de movilidad en la universidad.',
-                    style: TextStyle(fontSize: 16),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+            Center(
+              child: usuarioAsync.when(
+                data: (usuarios) {
+                  if (usuarios.isEmpty) {
+                    return const Text(
+                      'Hola',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.pink,
+                      ),
+                    );
+                  }
+                  final nombre = usuarios.first.nombre;
+                  return Column(
+                    children: [
+                      Text(
+                        'Hola $nombre',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.pink,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Bienvenida a UNIntercambio, la página para que gestiones las convocatorias de movilidad en la universidad.',
+                        style: TextStyle(fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  );
+                },
+                loading: () => const CircularProgressIndicator(),
+                error: (error, stack) => const Text(
+                  'Error al cargar el usuario',
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
             ),
             const SizedBox(height: 16),
@@ -59,7 +80,6 @@ class HomePage extends StatelessWidget {
               children: [
                 IconColumn(icon: Icons.assignment, label: 'Convocatorias', route: '/convocatorias'),
                 IconColumn(icon: Icons.people, label: 'Evaluación', route: '/evaluation'),
-                IconColumn(icon: Icons.bar_chart, label: 'Reportes', route: '/reports'),
               ],
             ),
             const SizedBox(height: 16),
