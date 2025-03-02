@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:un_intercambio/core/theme.dart';
 import 'package:un_intercambio/features/base_page.dart';
-import 'package:un_intercambio/models/convocatoria_estudiante.dart';
+import 'package:un_intercambio/data/models/convocatoria.dart';
 
 String getCurrentTime() {
   return DateFormat('HH:mm').format(DateTime.now());
 }
 
 class DetalleConvocatoriaPage extends StatelessWidget {
-  final ConvocatoriaEstudiante convocatoria;
+  final Convocatoria convocatoria;
 
   const DetalleConvocatoriaPage({super.key, required this.convocatoria});
 
@@ -77,16 +77,23 @@ class DetalleConvocatoriaPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _detalleItem(
-                        Icons.school, "Institución", convocatoria.institucion),
-                    _detalleItem(Icons.language, "Idioma requerido",
-                        convocatoria.idioma),
+                    //_detalleItem(
+                    //Icons.school, "Institución", convocatoria.institucion),
                     _detalleItem(Icons.category, "Tipo", convocatoria.tipo),
-                    _detalleItem(Icons.timeline, "Avance", convocatoria.avance),
-                    _detalleItem(
-                        Icons.date_range, "Fechas", convocatoria.fechas),
+                    _detalleItem(Icons.language, "Nivel Idioma",
+                        convocatoria.nivelIdioma),
+                    _detalleItem(Icons.timeline, "Promedio",
+                        convocatoria.promedioMinimo.toString()),
+                    _detalleItem(Icons.date_range, "Fechas",
+                        "${convocatoria.fechaInicio.toString()} - ${convocatoria.fechaFin.toString()}"),
                     _detalleItem(Icons.description, "Descripción",
                         convocatoria.descripcion,
+                        multiline: true),
+                    _detalleItem(
+                        Icons.assignment, "Requisitos", convocatoria.requisitos,
+                        multiline: true),
+                    _detalleItem(Icons.card_giftcard, "Beneficios",
+                        convocatoria.beneficios,
                         multiline: true),
                   ],
                 ),

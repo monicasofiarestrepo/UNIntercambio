@@ -4,7 +4,7 @@ import 'package:un_intercambio/data/models/convocatoria.dart';
 
 class ConvocatoriaRepository {
   final String _baseUrl =
-      'https://backend-devmovil.onrender.com/personas/';
+      'https://backend-devmovil.onrender.com/convocatorias/';
 
   Future<List<Convocatoria>> fetchConvocatorias() async {
     final response = await http.get(Uri.parse(_baseUrl));
