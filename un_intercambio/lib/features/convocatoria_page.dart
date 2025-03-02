@@ -30,98 +30,13 @@ class _ConvocatoriaPageState extends ConsumerState<ConvocatoriaPage> {
       if (query.isEmpty) {
         convocatoriasFiltradas = List.from(convocatorias);
       } else {
-        convocatoriasFiltradas = convocatorias
-            .where((convocatoria) =>
-                convocatoria.nombre.toLowerCase().contains(query.toLowerCase()) ||
-                convocatoria.tipo.toLowerCase().contains(query.toLowerCase()) ||
-                convocatoria.estado.toLowerCase().contains(query.toLowerCase()))
-            .toList();
+        convocatoriasFiltradas = convocatorias.where((convocatoria) =>
+          convocatoria.nombre.toLowerCase().contains(query.toLowerCase()) ||
+          convocatoria.tipo.toLowerCase().contains(query.toLowerCase()) ||
+          convocatoria.estado.toLowerCase().contains(query.toLowerCase())
+        ).toList();
       }
     });
-  }
-
-  void editarConvocatoria(Convocatoria convocatoria) {
-    final TextEditingController nombreController = TextEditingController(text: convocatoria.nombre);
-    final TextEditingController tipoController = TextEditingController(text: convocatoria.tipo);
-    final TextEditingController estadoController = TextEditingController(text: convocatoria.estado);
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Editar Convocatoria'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(controller: nombreController, decoration: InputDecoration(labelText: 'Nombre')),
-                TextField(controller: tipoController, decoration: InputDecoration(labelText: 'Tipo de Movilidad')),
-                TextField(controller: estadoController, decoration: InputDecoration(labelText: 'Estado')),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                final updatedConvocatoria = Convocatoria(
-                  id: convocatoria.id,
-                  idConvocatoria: convocatoria.idConvocatoria,
-                  nombre: nombreController.text,
-                  tipo: tipoController.text,
-                  descripcion: convocatoria.descripcion,
-                  requisitos: convocatoria.requisitos,
-                  promedioMinimo: convocatoria.promedioMinimo,
-                  nivelIdioma: convocatoria.nivelIdioma,
-                  beneficios: convocatoria.beneficios,
-                  fechaInicio: convocatoria.fechaInicio,
-                  fechaFin: convocatoria.fechaFin,
-                  estado: estadoController.text,
-                );
-
-                // TODO: Llamar al método del repositorio para actualizar la convocatoria si tienes uno
-                // await repository.updateConvocatoria(updatedConvocatoria);
-
-                setState(() {});
-                Navigator.pop(context);
-              },
-              child: Text('Guardar'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('Cancelar'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void eliminarConvocatoria(Convocatoria convocatoria) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Confirmar eliminación'),
-          content: Text('¿Estás seguro de que deseas eliminar esta convocatoria?'),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                // TODO: Llamar al método del repositorio para eliminar la convocatoria si tienes uno
-                // await repository.deleteConvocatoria(convocatoria.id);
-
-                setState(() {});
-                Navigator.pop(context);
-              },
-              child: Text('Eliminar', style: TextStyle(color: Colors.red)),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('Cancelar'),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
@@ -141,15 +56,15 @@ class _ConvocatoriaPageState extends ConsumerState<ConvocatoriaPage> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 150),
-                Text(
-                  'Convocatorias',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Gestiona las convocatorias de movilidad fácilmente.',
-                  style: Theme.of(context).textTheme.bodyMedium,
+                const SizedBox(height: 100),
+                const Center(
+                  child: Text(
+                    'Convocatorias',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 TextField(
@@ -157,8 +72,8 @@ class _ConvocatoriaPageState extends ConsumerState<ConvocatoriaPage> {
                     hintText: 'Buscar convocatorias...',
                     prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: SystemColors.neutralMedium),
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: SystemColors.neutralMedium),
                     ),
                   ),
                   onChanged: (value) => filtrarConvocatorias(value, convocatorias),
@@ -171,11 +86,17 @@ class _ConvocatoriaPageState extends ConsumerState<ConvocatoriaPage> {
                       final convocatoria = convocatoriasFiltradas[index];
                       return Card(
                         margin: const EdgeInsets.symmetric(vertical: 8.0),
-                        color: SystemColors.neutralBackground1,
                         child: ListTile(
-                          title: Text(convocatoria.nombre),
-                          subtitle: Text(
-                            "Tipo: ${convocatoria.tipo} | Estado: ${convocatoria.estado}",
+                          title: Text(
+                            convocatoria.nombre,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Tipo: ${convocatoria.tipo}"),
+                              Text("Estado: ${convocatoria.estado}"),
+                            ],
                           ),
                           onTap: () {
                             Navigator.push(
@@ -185,19 +106,6 @@ class _ConvocatoriaPageState extends ConsumerState<ConvocatoriaPage> {
                               ),
                             );
                           },
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.edit, color: SystemColors.primaryBlue),
-                                onPressed: () => editarConvocatoria(convocatoria),
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.delete, color: SystemColors.labelError),
-                                onPressed: () => eliminarConvocatoria(convocatoria),
-                              ),
-                            ],
-                          ),
                         ),
                       );
                     },
@@ -206,8 +114,8 @@ class _ConvocatoriaPageState extends ConsumerState<ConvocatoriaPage> {
               ],
             );
           },
-          loading: () => Center(child: CircularProgressIndicator()),
-          error: (error, stack) => Center(child: Text('Error: $error')),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, _) => Center(child: Text('Error: $error')),
         ),
       ),
     );

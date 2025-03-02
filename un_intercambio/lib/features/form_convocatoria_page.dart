@@ -82,75 +82,118 @@ class _FormularioConvocatoriaPageState extends State<FormularioConvocatoriaPage>
   @override
   Widget build(BuildContext context) {
     return BasePage(
-      currentIndex: null,
+      currentIndex: 1,
       child: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 150),
-              Text('Registro de convocatoria', style: Theme.of(context).textTheme.headlineMedium),
+              const SizedBox(height: 40),
+              Text(
+                'Registro de convocatoria',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+
+              const SizedBox(height: 30),
+
+              IconTextField(
+                controller: _nombreController,
+                label: 'Nombre',
+                prefixIcon: const Icon(Icons.title),
+              ),
+
               const SizedBox(height: 20),
+
               DropdownButtonFormField<String>(
                 value: _tipoConvocatoria,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Tipo de Convocatoria',
-                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: const Color(0xFFF5F5F5),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
                 items: ['Saliente', 'Entrante', 'Internacional', 'Nacional'].map((tipo) {
                   return DropdownMenuItem(value: tipo, child: Text(tipo));
                 }).toList(),
                 onChanged: (value) => setState(() => _tipoConvocatoria = value),
               ),
+
               const SizedBox(height: 20),
-              IconTextField(controller: _nombreController, label: 'Nombre', prefixIcon: const Icon(Icons.title)),
-              const SizedBox(height: 20),
+
               IconTextField(controller: _descripcionController, label: 'Descripción'),
               const SizedBox(height: 20),
+
               IconTextField(controller: _requisitosController, label: 'Requisitos'),
               const SizedBox(height: 20),
-              IconTextField(controller: _promedioMinimoController, label: 'Promedio mínimo', textInputType: TextInputType.number),
+
+              IconTextField(
+                controller: _promedioMinimoController,
+                label: 'Promedio mínimo',
+                textInputType: TextInputType.number,
+              ),
+
               const SizedBox(height: 20),
+
               IconTextField(controller: _nivelIdiomaController, label: 'Nivel de Idioma'),
               const SizedBox(height: 20),
+
               IconTextField(controller: _beneficiosController, label: 'Beneficios'),
               const SizedBox(height: 20),
+
               GestureDetector(
                 onTap: () => _seleccionarFecha(_fechaInicioController),
                 child: AbsorbPointer(
-                  child: IconTextField(controller: _fechaInicioController, label: 'Fecha de Inicio', prefixIcon: const Icon(Icons.calendar_today), readOnly: true),
+                  child: IconTextField(
+                    controller: _fechaInicioController,
+                    label: 'Fecha de Inicio',
+                    prefixIcon: const Icon(Icons.calendar_today),
+                    readOnly: true,
+                  ),
                 ),
               ),
+
               const SizedBox(height: 20),
+
               GestureDetector(
                 onTap: () => _seleccionarFecha(_fechaFinController),
                 child: AbsorbPointer(
-                  child: IconTextField(controller: _fechaFinController, label: 'Fecha de Fin', prefixIcon: const Icon(Icons.calendar_today), readOnly: true),
-                ),
-              ),
-              const SizedBox(height: 20),
-              GestureDetector(
-                onTap: _seleccionarArchivos,
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.blue[50],
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.blue),
+                  child: IconTextField(
+                    controller: _fechaFinController,
+                    label: 'Fecha de Fin',
+                    prefixIcon: const Icon(Icons.calendar_today),
+                    readOnly: true,
                   ),
-                  child: _archivos.isEmpty
-                      ? const Column(
-                          children: [Icon(Icons.upload_file, size: 40), Text('Selecciona archivos')],
-                        )
-                      : Text('${_archivos.length} archivo(s) seleccionado(s)'),
                 ),
               ),
-              const SizedBox(height: 20),
-              PrimaryButton(
-                onPressed: _enviarFormulario,
-                child: const Text('Registrar'),
+
+              const SizedBox(height: 40),
+
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF58C2D1), // Azul claro como en el diseño
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: _enviarFormulario,
+                  child: const Text(
+                    'Registrar',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ),
               ),
             ],
           ),

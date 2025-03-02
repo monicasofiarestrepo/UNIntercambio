@@ -4,6 +4,8 @@ class Candidato {
   final String programa;
   final String semestre;
   final String correo;
+  final double avance;
+  final double promedio;
 
   Candidato({
     required this.id,
@@ -11,15 +13,18 @@ class Candidato {
     required this.programa,
     required this.semestre,
     required this.correo,
+    required this.avance,
+    required this.promedio,
   });
 
   factory Candidato.fromJson(Map<String, dynamic> json) {
     return Candidato(
-      id: json['id'] as int,
       nombre: json['nombre'] as String,
       programa: json['programa'] as String,
       semestre: json['semestre'].toString(),
       correo: json['correo'] as String,
+      avance: (json['avance'] as num).toDouble(),
+      promedio: (json['promedio'] as num).toDouble(),
     );
   }
 }

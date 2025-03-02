@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 import 'package:provider/provider.dart';
 import 'package:un_intercambio/core/global_variables.dart';
 import 'package:un_intercambio/features/convocatoria_page.dart';
+import 'package:un_intercambio/features/convocatoria_conf_page.dart';
 import 'package:un_intercambio/features/calendar_page.dart';
 import 'package:un_intercambio/features/chat_page.dart';
 import 'package:un_intercambio/features/home_page.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
           '/metrics': (context) => const MetricPage(title: 'Métricas'),
           '/reports': (context) => const ReportPage(title: 'Reportes'),
           '/calendar': (context) => const CalendarPage(title: 'Calendario'),
+          '/convocatoriasConfig': (context) => const ConvocatoriaConfPage(title: 'Convocatorias'),
           //'/convocatorias': (context) => const ConvocatoriaPage(title: 'Convocatorias'),
           '/formularioConvocatorias': (context) =>
               const FormularioConvocatoriaPage(),

@@ -23,6 +23,7 @@ class CandidatosPage extends ConsumerStatefulWidget {
 class _CandidatosPageState extends ConsumerState<CandidatosPage> {
   List<Candidato> candidatosFiltrados = [];
   String searchText = '';
+  Set<int> seleccionados = {};
 
   void filtrarCandidatos(String query, List<Candidato> candidatos) {
     setState(() {
@@ -61,10 +62,11 @@ class _CandidatosPageState extends ConsumerState<CandidatosPage> {
               children: [
                 TextField(
                   decoration: InputDecoration(
-                    hintText: 'Buscar candidato...',
+                    hintText: 'Buscar...',
                     prefixIcon: const Icon(Icons.search),
+                    suffixIcon: const Icon(Icons.filter_list),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: SystemColors.neutralMedium),
                     ),
                   ),
@@ -76,23 +78,58 @@ class _CandidatosPageState extends ConsumerState<CandidatosPage> {
                     itemCount: candidatosFiltrados.length,
                     itemBuilder: (context, index) {
                       final candidato = candidatosFiltrados[index];
-                      return Card(
+                      final seleccionado = seleccionados.contains(candidato.id);
+
+                      return Container(
                         margin: const EdgeInsets.symmetric(vertical: 8.0),
+                        decoration: BoxDecoration(
+                          color: SystemColors.neutralLight,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
                         child: ListTile(
-                          leading: const CircleAvatar(child: Icon(Icons.person)),
-                          title: Text(candidato.nombre),
-                          subtitle: Text("Programa: ${candidato.programa} | Semestre: ${candidato.semestre}"),
+                          contentPadding: const EdgeInsets.all(12),
+                          leading: CircleAvatar(
+                            radius: 24,
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              Icons.person,
+                              color: SystemColors.primaryBlue,
+                            ),
+                          ),
+                          title: Text(
+                            candidato.nombre,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            'Promedio: ${candidato.promedio}\n'
+                            'Avance: ${candidato.avance}%\n'
+                            'Carrera: ${candidato.programa}',
+                          ),
                           trailing: IconButton(
-                            icon: const Icon(Icons.arrow_forward),
+                            icon: Icon(
+                              seleccionado ? Icons.check_box : Icons.check_box_outline_blank,
+                              color: seleccionado ? SystemColors.primaryBlue : Colors.black,
+                            ),
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DetallesCandidatoPage(candidato: candidato),
-                                ),
-                              );
+                              setState(() {
+                                if (seleccionado) {
+                                  seleccionados.remove(candidato.id);
+                                } else {
+                                  seleccionados.add(candidato.id);
+                                }
+                              });
                             },
                           ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetallesCandidatoPage(candidato: candidato),
+                              ),
+                            );
+                          },
                         ),
                       );
                     },
