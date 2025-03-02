@@ -1,28 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:un_intercambio/core/theme.dart';
+import 'package:un_intercambio/data/models/convocatoria.dart';
+import 'package:un_intercambio/data/repositories/convocatoria_repository.dart';
 import 'package:un_intercambio/features/base_page.dart';
 import 'package:un_intercambio/features/candidatos_page.dart';
 
-//TODO hacer más bonitos los campos
-//TODO hacer que cuando se abran las nuevas paginas se deseleccione el home
-//TODO arreglar el formulario que aparece para editar y hacerlo funcional
-//TODO revisar si se pueden utilizar widgets o colores ya creados
+final convocatoriaProvider = FutureProvider<List<Convocatoria>>((ref) async {
+  final repository = ConvocatoriaRepository();
+  return repository.fetchConvocatorias();
+});
 
-class Convocatoria {
-  String nombre;
-  String tipoMovilidad;
-  String estado;
-  String lugar;
-
-  Convocatoria({
-    required this.nombre,
-    required this.tipoMovilidad,
-    required this.estado,
-    required this.lugar,
-  });
-}
-
-class ConvocatoriaPage extends StatefulWidget {
+class ConvocatoriaPage extends ConsumerStatefulWidget {
   final String title;
 
   const ConvocatoriaPage({super.key, required this.title});
@@ -31,23 +20,11 @@ class ConvocatoriaPage extends StatefulWidget {
   _ConvocatoriaPageState createState() => _ConvocatoriaPageState();
 }
 
-class _ConvocatoriaPageState extends State<ConvocatoriaPage> {
-  final List<Convocatoria> convocatorias = [
-    Convocatoria(nombre: "Intercambio a España 2024", tipoMovilidad: "Saliente", estado: "Activa", lugar: "España"),
-    Convocatoria(nombre: "Programa de intercambio Alemania", tipoMovilidad: "Entrante", estado: "Cerrada", lugar: "Alemania"),
-    Convocatoria(nombre: "Intercambio con Japón", tipoMovilidad: "Saliente", estado: "Activa", lugar: "Japón"),
-  ];
-
+class _ConvocatoriaPageState extends ConsumerState<ConvocatoriaPage> {
   List<Convocatoria> convocatoriasFiltradas = [];
   String searchText = '';
 
-  @override
-  void initState() {
-    super.initState();
-    convocatoriasFiltradas = List.from(convocatorias);
-  }
-
-  void filtrarConvocatorias(String query) {
+  void filtrarConvocatorias(String query, List<Convocatoria> convocatorias) {
     setState(() {
       searchText = query;
       if (query.isEmpty) {
@@ -56,9 +33,8 @@ class _ConvocatoriaPageState extends State<ConvocatoriaPage> {
         convocatoriasFiltradas = convocatorias
             .where((convocatoria) =>
                 convocatoria.nombre.toLowerCase().contains(query.toLowerCase()) ||
-                convocatoria.tipoMovilidad.toLowerCase().contains(query.toLowerCase()) ||
-                convocatoria.estado.toLowerCase().contains(query.toLowerCase()) ||
-                convocatoria.lugar.toLowerCase().contains(query.toLowerCase()))
+                convocatoria.tipo.toLowerCase().contains(query.toLowerCase()) ||
+                convocatoria.estado.toLowerCase().contains(query.toLowerCase()))
             .toList();
       }
     });
@@ -66,9 +42,8 @@ class _ConvocatoriaPageState extends State<ConvocatoriaPage> {
 
   void editarConvocatoria(Convocatoria convocatoria) {
     final TextEditingController nombreController = TextEditingController(text: convocatoria.nombre);
-    final TextEditingController tipoMovilidadController = TextEditingController(text: convocatoria.tipoMovilidad);
+    final TextEditingController tipoController = TextEditingController(text: convocatoria.tipo);
     final TextEditingController estadoController = TextEditingController(text: convocatoria.estado);
-    final TextEditingController lugarController = TextEditingController(text: convocatoria.lugar);
 
     showDialog(
       context: context,
@@ -80,21 +55,33 @@ class _ConvocatoriaPageState extends State<ConvocatoriaPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(controller: nombreController, decoration: InputDecoration(labelText: 'Nombre')),
-                TextField(controller: tipoMovilidadController, decoration: InputDecoration(labelText: 'Tipo de Movilidad')),
+                TextField(controller: tipoController, decoration: InputDecoration(labelText: 'Tipo de Movilidad')),
                 TextField(controller: estadoController, decoration: InputDecoration(labelText: 'Estado')),
-                TextField(controller: lugarController, decoration: InputDecoration(labelText: 'Lugar')),
               ],
             ),
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                setState(() {
-                  convocatoria.nombre = nombreController.text;
-                  convocatoria.tipoMovilidad = tipoMovilidadController.text;
-                  convocatoria.estado = estadoController.text;
-                  convocatoria.lugar = lugarController.text;
-                });
+              onPressed: () async {
+                final updatedConvocatoria = Convocatoria(
+                  id: convocatoria.id,
+                  idConvocatoria: convocatoria.idConvocatoria,
+                  nombre: nombreController.text,
+                  tipo: tipoController.text,
+                  descripcion: convocatoria.descripcion,
+                  requisitos: convocatoria.requisitos,
+                  promedioMinimo: convocatoria.promedioMinimo,
+                  nivelIdioma: convocatoria.nivelIdioma,
+                  beneficios: convocatoria.beneficios,
+                  fechaInicio: convocatoria.fechaInicio,
+                  fechaFin: convocatoria.fechaFin,
+                  estado: estadoController.text,
+                );
+
+                // TODO: Llamar al método del repositorio para actualizar la convocatoria si tienes uno
+                // await repository.updateConvocatoria(updatedConvocatoria);
+
+                setState(() {});
                 Navigator.pop(context);
               },
               child: Text('Guardar'),
@@ -118,11 +105,11 @@ class _ConvocatoriaPageState extends State<ConvocatoriaPage> {
           content: Text('¿Estás seguro de que deseas eliminar esta convocatoria?'),
           actions: [
             TextButton(
-              onPressed: () {
-                setState(() {
-                  convocatorias.remove(convocatoria);
-                  convocatoriasFiltradas.remove(convocatoria);
-                });
+              onPressed: () async {
+                // TODO: Llamar al método del repositorio para eliminar la convocatoria si tienes uno
+                // await repository.deleteConvocatoria(convocatoria.id);
+
+                setState(() {});
                 Navigator.pop(context);
               },
               child: Text('Eliminar', style: TextStyle(color: Colors.red)),
@@ -139,78 +126,88 @@ class _ConvocatoriaPageState extends State<ConvocatoriaPage> {
 
   @override
   Widget build(BuildContext context) {
+    final convocatoriaAsync = ref.watch(convocatoriaProvider);
+
     return BasePage(
       currentIndex: 0,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 150),
-            Text(
-              'Convocatorias',
-              style: Theme.of(context).textTheme.headlineMedium,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Gestiona las convocatorias de movilidad fácilmente.',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 16),
-            // Barra de búsqueda
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Buscar convocatorias...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: SystemColors.neutralMedium),
+        child: convocatoriaAsync.when(
+          data: (convocatorias) {
+            if (searchText.isEmpty && convocatoriasFiltradas.isEmpty) {
+              convocatoriasFiltradas = List.from(convocatorias);
+            }
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 150),
+                Text(
+                  'Convocatorias',
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
-              ),
-              onChanged: filtrarConvocatorias,
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: ListView.builder(
-                itemCount: convocatoriasFiltradas.length,
-                itemBuilder: (context, index) {
-                  final convocatoria = convocatoriasFiltradas[index];
-                  return Card(
-                    margin: const EdgeInsets.symmetric(vertical: 8.0),
-                    color: SystemColors.neutralBackground1,
-                    child: ListTile(
-                      title: Text(convocatoria.nombre),
-                      subtitle: Text(
-                        "Tipo: ${convocatoria.tipoMovilidad} | Estado: ${convocatoria.estado} | Lugar: ${convocatoria.lugar}",
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CandidatosPage(convocatoria: convocatoria),
-                          ),
-                        );
-                      },
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.edit, color: SystemColors.primaryBlue),
-                            onPressed: () => editarConvocatoria(convocatoria),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.delete, color: SystemColors.labelError),
-                            onPressed: () => eliminarConvocatoria(convocatoria),
-                          ),
-                        ],
-                      ),
+                const SizedBox(height: 16),
+                Text(
+                  'Gestiona las convocatorias de movilidad fácilmente.',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Buscar convocatorias...',
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: SystemColors.neutralMedium),
                     ),
-                  );
-                },
-              ),
-            ),
-          ],
+                  ),
+                  onChanged: (value) => filtrarConvocatorias(value, convocatorias),
+                ),
+                const SizedBox(height: 16),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: convocatoriasFiltradas.length,
+                    itemBuilder: (context, index) {
+                      final convocatoria = convocatoriasFiltradas[index];
+                      return Card(
+                        margin: const EdgeInsets.symmetric(vertical: 8.0),
+                        color: SystemColors.neutralBackground1,
+                        child: ListTile(
+                          title: Text(convocatoria.nombre),
+                          subtitle: Text(
+                            "Tipo: ${convocatoria.tipo} | Estado: ${convocatoria.estado}",
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CandidatosPage(convocatoria: convocatoria),
+                              ),
+                            );
+                          },
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.edit, color: SystemColors.primaryBlue),
+                                onPressed: () => editarConvocatoria(convocatoria),
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.delete, color: SystemColors.labelError),
+                                onPressed: () => eliminarConvocatoria(convocatoria),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
+          loading: () => Center(child: CircularProgressIndicator()),
+          error: (error, stack) => Center(child: Text('Error: $error')),
         ),
       ),
     );

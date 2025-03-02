@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:un_intercambio/features/candidatos_page.dart';
+import 'package:un_intercambio/data/models/candidato.dart';
 
 class DetallesCandidatoPage extends StatelessWidget {
   final Candidato candidato;
@@ -15,7 +15,10 @@ class DetallesCandidatoPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Nombre: ${candidato.nombre}", style: Theme.of(context).textTheme.headlineSmall),
+            Text(
+              "Nombre: ${candidato.nombre}",
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
             const SizedBox(height: 8),
             Text("Programa: ${candidato.programa}"),
             Text("Semestre: ${candidato.semestre}"),
