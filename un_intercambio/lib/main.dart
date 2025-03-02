@@ -14,6 +14,8 @@ import 'package:un_intercambio/features/form_convocatoria_page.dart';
 import 'package:un_intercambio/features/register_page.dart';
 import 'package:un_intercambio/features/recover_account_page.dart';
 import 'package:un_intercambio/data/services/auth_provider.dart';
+import 'package:un_intercambio/features/student/cambio_moneda_page.dart';
+import 'package:un_intercambio/features/student/convocatoria_estudiante_page.dart';
 import 'package:un_intercambio/features/student/home_estudiante_page.dart';
 
 void main() {
@@ -46,6 +48,8 @@ class MyApp extends StatelessWidget {
           '/recover': (context) => const RecoverAccountPage(),
           '/home': (context) => const HomePage(title: 'UNintercambio Home'),
           '/home-student': (context) => const Home(),
+          '/convocatorias-student': (context) => const ConvocatoriaEstudiantePage(),
+          '/cambio-moneda': (context) => const CurrencyConverterScreen(),
           '/info': (context) => const InfoPage(title: 'Información'),
           '/chat': (context) => const ChatPage(title: 'Chat'),
           '/profile': (context) => const UserProfilePage(title: 'Perfil'),

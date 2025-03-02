@@ -1,6 +1,6 @@
 class ExchangeRate {
   final String baseCode;
-  final Map<String, double> conversionRates;
+  final Map<String, num> conversionRates;
 
   ExchangeRate({
     required this.baseCode,
@@ -10,7 +10,7 @@ class ExchangeRate {
   factory ExchangeRate.fromJson(Map<String, dynamic> json) {
     return ExchangeRate(
       baseCode: json['base_code'],
-      conversionRates: Map<String, double>.from(json['conversion_rates']),
+      conversionRates: Map<String, num>.from(json['conversion_rates']),
     );
   }
 }

@@ -138,7 +138,7 @@ class Home extends StatelessWidget {
                 IconColumn(
                     icon: Icons.article,
                     label: 'Convocatorias disponibles',
-                    route: '/convocatorias'),
+                    route: '/convocatorias-student'),
                 IconColumn(
                   icon: Icons.folder,
                   label: 'Documentos guardados',
@@ -162,7 +162,7 @@ class Home extends StatelessWidget {
                     subtitle:
                         'Convierte monedas fácilmente para tu movilidad en convocatorias internacionales',
                     icon: Icons.monetization_on,
-                    route: '/',
+                    route: '/cambio-moneda',
                   ),
                 ],
               ),
