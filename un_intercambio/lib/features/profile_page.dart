@@ -3,9 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:un_intercambio/features/base_page.dart';
 import 'package:un_intercambio/data/providers/usuario_provider.dart';
-import 'package:un_intercambio/data/models/usuario.dart';
+import 'package:un_intercambio/core/global_variables.dart';
 
-// Página de perfil de usuario que usa Riverpod para obtener datos desde la API
 class UserProfilePage extends ConsumerStatefulWidget {
   final String title;
 
@@ -82,9 +81,9 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
                       // Información del usuario
                       InfoText(label: "Correo", value: usuario.correo), // viene del endpoint de Riverpod
                       InfoText(label: "Tipo de Usuario", value: usuario.tipoUsuario), // viene del endpoint de Riverpod
-                      const InfoText(label: "Promedio", value: "4.8"), // Estático porque el endpoint no lo trae 
-                      const InfoText(label: "Avance", value: "81%"),
-                      const InfoText(label: "Carrera", value: "Ing. Administrativa"),
+                      getIsEstudiante(ref)? const InfoText(label: "Promedio", value: "4.8") : const SizedBox(), // Estático porque el endpoint no lo trae 
+                      getIsEstudiante(ref)? const InfoText(label: "Avance", value: "81%"): const SizedBox(),
+                      getIsEstudiante(ref)? const InfoText(label: "Carrera", value: "Ing. Administrativa"): const SizedBox(),
                       const InfoText(label: "Idiomas", value: "Inglés B1 y portugués A2"),
                       const InfoText(label: "Celular", value: "3044833098"),
 
