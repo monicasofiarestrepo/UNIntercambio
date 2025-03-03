@@ -14,12 +14,15 @@ class PostulacionForm extends ConsumerStatefulWidget {
   final String tituloConvocatoria;
   final String descripcionConvocatoria;
   final String nivelIdioma;
+  final String idConvocatoria;
+
 
   const PostulacionForm({
     super.key,
     required this.tituloConvocatoria,
     required this.descripcionConvocatoria,
     required this.nivelIdioma,
+    required this.idConvocatoria,
   });
 
   @override
@@ -51,8 +54,10 @@ class _PostulacionFormState extends ConsumerState<PostulacionForm> {
 
   void _postular() async {
     final postulacion = Postulacion(
+      nombreConvocatoria: widget.tituloConvocatoria,
+      descripcion: widget.descripcionConvocatoria,
       correoElectronico: _correoController.text.trim(),
-      idConvocatoria: "65c9fbc4e45a3e001c4e2a17", // 🔹 Reemplazar con ID real
+      idConvocatoria: widget.idConvocatoria,
       estado: "pendiente",
       promedio: double.tryParse(_promedioController.text.trim()) ?? 0.0,
       porcentajeAvance: int.tryParse(_porcentajeAvanceController.text.trim()) ?? 0,
