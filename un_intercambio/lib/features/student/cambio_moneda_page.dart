@@ -17,7 +17,7 @@ class _CurrencyConverterScreenState
   String selectedCurrency = "USD";
   String confirmedCurrency = "USD";
   double convertedAmount = 0.0;
-  double lastUsedRate = 1.0; // Guarda la última tasa de conversión utilizada
+  double lastUsedRate = 1.0;
 
   final List<Map<String, String>> currencies = [
     {"code": "USD", "flag": "US"},
@@ -50,6 +50,16 @@ class _CurrencyConverterScreenState
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
+        flexibleSpace: ClipRRect(
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/noLogoBackground.png"),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+        ),
       ),
       body: Center(
         child: Padding(
@@ -83,7 +93,6 @@ class _CurrencyConverterScreenState
                         ),
                       ),
                       const SizedBox(height: 8),
-                      // Texto que indica a qué moneda se está convirtiendo
                       Text(
                         "a : ",
                         style: const TextStyle(
