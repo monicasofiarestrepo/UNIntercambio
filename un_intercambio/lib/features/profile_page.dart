@@ -150,6 +150,7 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
                 const InfoText(label: "Avance", value: "81%"),
                 const InfoText(label: "Carrera", value: "Ing. Administrativa"),
               ],
+              
               Center(
                 child: GestureDetector(
                   onTap: _seleccionarArchivos,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:un_intercambio/core/theme.dart';
 import 'package:un_intercambio/features/base_page.dart';
 import 'package:un_intercambio/data/providers/usuario_provider.dart';
 import 'package:un_intercambio/data/models/usuario.dart';
@@ -20,59 +21,73 @@ class _AdminProfilePageState extends ConsumerState<AdminProfilePage> {
 
     return BasePage(
       currentIndex: 3,
-      child: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 100),
-            usuarioAsyncValue.when(
-              data: (usuario) {
-                if (usuario == null) return const Text("Administrador no encontrado");
-                return Text(
-                  usuario.nombre,
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                );
+      child: Stack(
+        children: [
+          Positioned(
+            top: 40,
+            right: 20,
+            child: IconButton(
+              icon: const Icon(Icons.logout, color: SystemColors.primaryPrink),
+              onPressed: () {
+                Navigator.pushNamed(context, '/login');
               },
-              loading: () => const CircularProgressIndicator(),
-              error: (_, __) => const Text("Error al cargar administrador"),
             ),
-            const SizedBox(height: 30),
-            Container(
-              width: 380,
-              height: 500,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.grey.shade100,
-              ),
-              padding: const EdgeInsets.all(30),
-              child: usuarioAsyncValue.when(
-                data: (usuario) {
-                  if (usuario == null) return const Center(child: Text("No hay datos"));
+          ),
+          Center(
+            child: Column(
+              children: [
+                const SizedBox(height: 100),
+                usuarioAsyncValue.when(
+                  data: (usuario) {
+                    if (usuario == null) return const Text("Administrador no encontrado");
+                    return Text(
+                      usuario.nombre,
+                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    );
+                  },
+                  loading: () => const CircularProgressIndicator(),
+                  error: (_, __) => const Text("Error al cargar administrador"),
+                ),
+                const SizedBox(height: 30),
+                Container(
+                  width: 380,
+                  height: 500,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.grey.shade100,
+                  ),
+                  padding: const EdgeInsets.all(30),
+                  child: usuarioAsyncValue.when(
+                    data: (usuario) {
+                      if (usuario == null) return const Center(child: Text("No hay datos"));
 
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Image.asset(
-                          'assets/images/avatar3.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      InfoText(label: "Correo", value: usuario.correo),
-                      InfoText(label: "Tipo de Usuario", value: usuario.tipoUsuario),
-                      const InfoText(label: "Rol", value: "Administrador General"),
-                      const InfoText(label: "Departamento", value: "Oficina de Relaciones Internacionales"),
-                      const InfoText(label: "Extensión", value: "1234"),
-                      const InfoText(label: "Teléfono", value: "601-5555555"),
-                    ],
-                  );
-                },
-                loading: () => const Center(child: CircularProgressIndicator()),
-                error: (_, __) => const Center(child: Text("Error al cargar administrador")),
-              ),
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: Image.asset(
+                              'assets/images/avatar3.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          InfoText(label: "Correo", value: usuario.correo),
+                          InfoText(label: "Tipo de Usuario", value: usuario.tipoUsuario),
+                          const InfoText(label: "Rol", value: "Administrador General"),
+                          const InfoText(label: "Departamento", value: "Oficina de Relaciones Internacionales"),
+                          const InfoText(label: "Extensión", value: "1234"),
+                          const InfoText(label: "Teléfono", value: "601-5555555"),
+                        ],
+                      );
+                    },
+                    loading: () => const Center(child: CircularProgressIndicator()),
+                    error: (_, __) => const Center(child: Text("Error al cargar administrador")),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
