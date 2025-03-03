@@ -12,11 +12,13 @@ import 'package:un_intercambio/data/providers/usuario_provider.dart'; // 🔹 Us
 
 class PostulacionForm extends ConsumerStatefulWidget {
   final String tituloConvocatoria;
+  final String descripcionConvocatoria;
   final String nivelIdioma;
 
   const PostulacionForm({
     super.key,
     required this.tituloConvocatoria,
+    required this.descripcionConvocatoria,
     required this.nivelIdioma,
   });
 

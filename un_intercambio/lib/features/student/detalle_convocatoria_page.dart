@@ -134,7 +134,7 @@ class DetalleConvocatoriaPage extends StatelessWidget {
                       Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  PostulacionForm(tituloConvocatoria: convocatoria.nombre , nivelIdioma: convocatoria.nivelIdioma),
+                        builder: (context) =>  PostulacionForm(tituloConvocatoria: convocatoria.nombre , nivelIdioma: convocatoria.nivelIdioma, descripcionConvocatoria: convocatoria.descripcion,),
                       ),
                     );
                   },
