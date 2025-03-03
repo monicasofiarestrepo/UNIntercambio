@@ -7,10 +7,17 @@ import 'package:un_intercambio/core/unintercambio_custom_icons.dart';
 import 'package:un_intercambio/features/base_page.dart';
 
 class PostulacionForm extends StatefulWidget {
-  const PostulacionForm({super.key});
+  final String tituloConvocatoria;
+  final String nivelIdioma;
+
+  const PostulacionForm({
+    super.key,
+    required this.tituloConvocatoria,
+    required this.nivelIdioma,
+  });
 
   @override
-  _PostulacionFormState createState() => _PostulacionFormState();
+  State<PostulacionForm> createState() => _PostulacionFormState();
 }
 
 class _PostulacionFormState extends State<PostulacionForm> {
@@ -39,19 +46,34 @@ class _PostulacionFormState extends State<PostulacionForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 65),
-              const Text(
-                'Formulario de postulación',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              const SizedBox(height: 50),
+              
+              /// 🏫 Título de la Convocatoria
+              Text(
+                widget.tituloConvocatoria,
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
+              
               const SizedBox(height: 8),
+              
+              /// 📍 Lugar de la Convocatoria
+              Text(
+                widget.nivelIdioma,
+                style: const TextStyle(fontSize: 18, color: Colors.black54),
+                textAlign: TextAlign.center,
+              ),
+              
+              const SizedBox(height: 20),
               const Text(
                 'Registre la información solicitada para presentarse a la convocatoria',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16, color: Colors.black54),
               ),
+              
               const SizedBox(height: 20),
+              
+              /// 📋 Campos del formulario
               for (var label in ['Promedio', 'Porcentaje de avance', 'Carrera', 'Idiomas', 'Celular', 'Correo electrónico'])
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12.0),
@@ -67,7 +89,10 @@ class _PostulacionFormState extends State<PostulacionForm> {
                     ),
                   ),
                 ),
+              
               const SizedBox(height: 20),
+              
+              /// 📎 Subida de archivos
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: _archivos.keys.map((tipo) {
@@ -101,45 +126,48 @@ class _PostulacionFormState extends State<PostulacionForm> {
                   );
                 }).toList(),
               ),
+              
               const SizedBox(height: 30),
+              
+              /// 📤 Botón de postulación
               SizedBox(
                 width: double.infinity,
                 height: 50,
-              child: ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                        title: const Text('¡Mucha suerte!', textAlign: TextAlign.center),
-                        content: const Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(UNintercambioIcons.graduation_cap, color: SystemColors.primaryGreenDark, size: 60),
-                            SizedBox(height: 10),
-                            Text('Tu postulación ha sido enviada correctamente.'),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                  Future.delayed(const Duration(seconds: 2), () {
-                    Navigator.of(context).pop(); 
-                    Navigator.pushReplacementNamed(context, '/home');
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: SystemColors.primaryBlue,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                ),
-                child: const Text(
-                  'Postularme',
-                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                child: ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          title: const Text('¡Mucha suerte!', textAlign: TextAlign.center),
+                          content: const Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(UNintercambioIcons.graduation_cap, color: SystemColors.primaryGreenDark, size: 60),
+                              SizedBox(height: 10),
+                              Text('Tu postulación ha sido enviada correctamente.'),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                    Future.delayed(const Duration(seconds: 2), () {
+                      Navigator.of(context).pop();
+                      Navigator.pushReplacementNamed(context, '/home');
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: SystemColors.primaryBlue,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
+                  child: const Text(
+                    'Postularme',
+                    style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
 
-              ),
               const SizedBox(height: 20),
             ],
           ),

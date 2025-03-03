@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
           '/reports': (context) => const ReportPage(title: 'Reportes'),
           '/calendar': (context) => const CalendarPage(title: 'Calendario'),
           '/convocatoriasConfig': (context) => const ConvocatoriaConfPage(title: 'Convocatorias'),
-          '/formularioPostulacion': (context) => const PostulacionForm(),
+          '/formularioPostulacion': (context) => const PostulacionForm(tituloConvocatoria: '', nivelIdioma: ''), 
           //'/convocatorias': (context) => const ConvocatoriaPage(title: 'Convocatorias'),
           '/formularioConvocatorias': (context) =>
               const FormularioConvocatoriaPage(),
