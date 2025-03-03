@@ -293,7 +293,7 @@ class _ConvocatoriaConfPageState extends ConsumerState<ConvocatoriaConfPage> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => CandidatosPage(
-                                  convocatoriaId: convocatoria.idConvocatoria!,
+                                  convocatoriaId: convocatoria.id!,
                                   convocatoriaNombre: convocatoria.nombre,
                                 ),
                               ),
