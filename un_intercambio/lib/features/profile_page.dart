@@ -107,7 +107,7 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
                   ),
 
 
-            SizedBox(width: 300, child: PrimaryButton(
+            isEstudiante?  SizedBox(width: 300, child: PrimaryButton(
               child: widget.userInfo
                   ? const Text("Ver estado de postulaciones")
                   : const Text("Ver información del usuario"),
@@ -116,7 +116,7 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
                   widget.userInfo = !widget.userInfo;
                 });
               },
-            ),)
+            ),) : const SizedBox()
           ],
         ),
       ),
@@ -142,7 +142,7 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
             children: [
               Center(
                 child: Image.asset(
-                  'assets/images/avatar2.png',
+                  isEstudiante?  'assets/images/avatar2.png' : 'assets/images/avatar3.png',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -158,7 +158,7 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
               Center(
                 child: GestureDetector(
                   onTap: _seleccionarArchivos,
-                  child: Container(
+                  child: isEstudiante?  Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
@@ -180,7 +180,7 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
                               ),
                             ],
                           ),
-                  ),
+                  ) : const SizedBox(),
                 ),
               ),
             ],
