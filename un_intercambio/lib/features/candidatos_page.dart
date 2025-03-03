@@ -17,7 +17,7 @@ class CandidatosPage extends ConsumerStatefulWidget {
   const CandidatosPage({super.key, required this.convocatoria});
 
   @override
-  _CandidatosPageState createState() => _CandidatosPageState();
+  ConsumerState<CandidatosPage> createState() => _CandidatosPageState();
 }
 
 class _CandidatosPageState extends ConsumerState<CandidatosPage> {
@@ -88,7 +88,7 @@ class _CandidatosPageState extends ConsumerState<CandidatosPage> {
                         ),
                         child: ListTile(
                           contentPadding: const EdgeInsets.all(12),
-                          leading: CircleAvatar(
+                          leading: const CircleAvatar(
                             radius: 24,
                             backgroundColor: Colors.white,
                             child: Icon(

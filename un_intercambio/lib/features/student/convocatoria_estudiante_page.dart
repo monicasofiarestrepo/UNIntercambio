@@ -161,41 +161,21 @@ class ConvocatoriaEstudiantePageState
                             ],
                           ),
                           trailing: SizedBox(
-                            width: 80, // Ajusta el ancho según sea necesario
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: TextButton(
-                                    onPressed: () =>
-                                        guardarConvocatoria(convocatoria),
-                                    child: const Text(
-                                      'Guardar',
-                                      style: TextStyle(
-                                        color: SystemColors.primaryViolet,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                          width: 120, // Adjust width as needed
+                          child: Align(
+                                alignment: Alignment.centerRight,
+                                child: TextButton(
+                                  onPressed: () => postularConvocatoria(convocatoria),
+                                  child: const Text(
+                                    'Ver más',
+                                    style: TextStyle(
+                                      color: SystemColors.primaryBlue,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                                const SizedBox(
-                                    height: 12), // Espaciado vertical
-                                Expanded(
-                                  child: TextButton(
-                                    onPressed: () =>
-                                        postularConvocatoria(convocatoria),
-                                    child: const Text(
-                                      'Postular',
-                                      style: TextStyle(
-                                        color: SystemColors.primaryBlue,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                              ), 
+                        ), 
                         ),
                       );
                     },

@@ -25,13 +25,13 @@ class BottomNavBar extends StatelessWidget {
       unselectedItemColor: SystemColors.neutralMedium,
       items: const [
         BottomNavigationBarItem(
-            icon: Icon(UNintercambioIcons.home_1), label: 'Home'),
+            icon: Icon(UNintercambioIcons.home_1), label: 'Inicio'),
         BottomNavigationBarItem(
             icon: Icon(UNintercambioIcons.book_open), label: 'Convocatorias'),
         BottomNavigationBarItem(
             icon: Icon(UNintercambioIcons.chat_1), label: 'Chat'),
         BottomNavigationBarItem(
-            icon: Icon(UNintercambioIcons.user), label: 'Profile'),
+            icon: Icon(UNintercambioIcons.user), label: 'Perfil'),
       ],
     );
   }
