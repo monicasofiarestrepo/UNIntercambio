@@ -4,7 +4,7 @@ import 'package:un_intercambio/core/theme.dart';
 import 'package:un_intercambio/data/models/candidato.dart';
 import 'package:un_intercambio/data/repositories/candidato_repository.dart';
 import 'package:un_intercambio/features/detalles_candidatos_page.dart';
-import 'package:un_intercambio/data/models/convocatoria.dart';
+import 'package:un_intercambio/features/base_page.dart';
 
 final candidatosProvider = FutureProvider.family<List<Candidato>, String?>((ref, convocatoriaId) async {
   final repository = CandidatoRepository();
@@ -37,8 +37,8 @@ class _CandidatosPageState extends ConsumerState<CandidatosPage> {
         candidatosFiltrados = List.from(candidatos);
       } else {
         candidatosFiltrados = candidatos.where((candidato) =>
-          candidato.nombre.toLowerCase().contains(query.toLowerCase()) ||
-          candidato.programa.toLowerCase().contains(query.toLowerCase())
+            candidato.nombre.toLowerCase().contains(query.toLowerCase()) ||
+            candidato.programa.toLowerCase().contains(query.toLowerCase())
         ).toList();
       }
     });
@@ -48,12 +48,9 @@ class _CandidatosPageState extends ConsumerState<CandidatosPage> {
   Widget build(BuildContext context) {
     final candidatosAsync = ref.watch(candidatosProvider(widget.convocatoriaId));
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Candidatos postulados - ${widget.convocatoriaNombre}'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+    return BasePage(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: candidatosAsync.when(
           data: (candidatos) {
             if (searchText.isEmpty && candidatosFiltrados.isEmpty) {
@@ -61,7 +58,33 @@ class _CandidatosPageState extends ConsumerState<CandidatosPage> {
             }
 
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.black87),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'Candidatos postulados',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  widget.convocatoriaNombre,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 20),
                 TextField(
                   decoration: InputDecoration(
                     hintText: 'Buscar...',
@@ -71,10 +94,11 @@ class _CandidatosPageState extends ConsumerState<CandidatosPage> {
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: SystemColors.neutralMedium),
                     ),
+                    filled: true,
                   ),
                   onChanged: (value) => filtrarCandidatos(value, candidatos),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
                 Expanded(
                   child: ListView.builder(
                     itemCount: candidatosFiltrados.length,
@@ -85,11 +109,17 @@ class _CandidatosPageState extends ConsumerState<CandidatosPage> {
                       return Container(
                         margin: const EdgeInsets.symmetric(vertical: 8.0),
                         decoration: BoxDecoration(
-                          color: SystemColors.neutralLight,
                           borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
                         ),
                         child: ListTile(
-                          contentPadding: const EdgeInsets.all(12),
+                          contentPadding: const EdgeInsets.all(16),
                           leading: const CircleAvatar(
                             radius: 24,
                             backgroundColor: Colors.white,
@@ -102,11 +132,15 @@ class _CandidatosPageState extends ConsumerState<CandidatosPage> {
                             candidato.nombre,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
+                              fontSize: 16,
                             ),
                           ),
                           subtitle: Text(
                             'Promedio: ${candidato.promedio}\n'
                             'Carrera: ${candidato.programa}',
+                            style: const TextStyle(
+                              height: 1.5,
+                            ),
                           ),
                           trailing: IconButton(
                             icon: Icon(
@@ -140,7 +174,12 @@ class _CandidatosPageState extends ConsumerState<CandidatosPage> {
             );
           },
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, stack) => Center(child: Text('Error: $error')),
+          error: (error, stack) => Center(
+            child: Text(
+              'Error: $error',
+              style: TextStyle(color: Colors.redAccent),
+            ),
+          ),
         ),
       ),
     );
