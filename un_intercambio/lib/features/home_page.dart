@@ -12,7 +12,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final usuarioAsync = ref.watch(usuarioProvider);
+    final usuarioAsync = ref.watch(usuarioActualProvider);
 
     return BasePage(
       backgroundImageRoute: 'assets/images/backgroundWithLogo.png',
@@ -24,8 +24,8 @@ class HomePage extends ConsumerWidget {
             const SizedBox(height: 120),
             Center(
               child: usuarioAsync.when(
-                data: (usuarios) {
-                  if (usuarios.isEmpty) {
+                data: (usuario) {
+                  if (usuario == null) {
                     return const Text(
                       'Hola',
                       style: TextStyle(
@@ -35,7 +35,7 @@ class HomePage extends ConsumerWidget {
                       ),
                     );
                   }
-                  final nombre = usuarios.first.nombre;
+                  final nombre = usuario.nombre ?? 'Usuario';
                   return Column(
                     children: [
                       Text(
@@ -48,7 +48,7 @@ class HomePage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 8),
                       const Text(
-                        'Bienvenida a UNIntercambio, la página para que gestiones las convocatorias de movilidad en la universidad.',
+                        'Bienvenid@ a UNIntercambio, la página para que gestiones las convocatorias de movilidad en la universidad.',
                         style: TextStyle(fontSize: 16),
                         textAlign: TextAlign.center,
                       ),
@@ -78,8 +78,7 @@ class HomePage extends ConsumerWidget {
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                IconColumn(icon: Icons.assignment, label: 'Convocatorias', route: '/convocatoriasConfig'),
-                IconColumn(icon: Icons.people, label: 'Evaluación', route: '/evaluation'),
+                IconColumn(icon: Icons.assignment, label: 'Editar convocatorias', route: '/convocatoriasConfig'),
               ],
             ),
             const SizedBox(height: 16),

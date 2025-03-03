@@ -99,11 +99,10 @@ class _ConvocatoriaPageState extends ConsumerState<ConvocatoriaPage> {
                             ],
                           ),
                           onTap: () {
-                            Navigator.push(
+                            Navigator.pushNamed(
                               context,
-                              MaterialPageRoute(
-                                builder: (context) => CandidatosPage(convocatoria: convocatoria),
-                              ),
+                              '/candidatos',
+                              arguments: {'convocatoriaId': convocatoria.id},
                             );
                           },
                         ),

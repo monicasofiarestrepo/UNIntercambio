@@ -29,4 +29,28 @@ class ConvocatoriaRepository {
       throw Exception('Error al registrar convocatoria: ${response.body}');
     }
   }
+
+  // Editar convocatoria
+  Future<void> editarConvocatoria(String id, Map<String, dynamic> convocatoria) async {
+    final response = await http.put(
+      Uri.parse('$_baseUrl$id/'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(convocatoria),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Error al actualizar convocatoria: ${response.body}');
+    }
+  }
+
+  // Eliminar convocatoria
+  Future<void> eliminarConvocatoria(String id) async {
+    final response = await http.delete(
+      Uri.parse('$_baseUrl$id/'),
+    );
+
+    if (response.statusCode != 204) {
+      throw Exception('Error al eliminar convocatoria: ${response.body}');
+    }
+  }
 }

@@ -31,7 +31,7 @@ class _ChatPageState extends State<ChatPage> {
 
   // Lista de estudiantes
   final List<Estudiante> estudiantes = [
-    Estudiante(nombre: 'Juan Perez', avatarUrl: 'assets/images/avatar1.png'),
+    Estudiante(nombre: 'Juanita Perez', avatarUrl: 'assets/images/avatar1.png'),
     Estudiante(nombre: 'Maria Garcia', avatarUrl: 'assets/images/avatar2.png'),
     Estudiante(nombre: 'Luis Morales', avatarUrl: 'assets/images/avatar3.png'),
     // Añadir más estudiantes si es necesario
@@ -81,7 +81,7 @@ class _ChatPageState extends State<ChatPage> {
       currentIndex: 2, // Índice para la pantalla de chat
       child: Column(
         children: [
-          const SizedBox(height: 150),
+          const SizedBox(height: 100),
           // Título del chat con el nombre del estudiante y su foto
           Padding(
             padding: const EdgeInsets.all(16.0),

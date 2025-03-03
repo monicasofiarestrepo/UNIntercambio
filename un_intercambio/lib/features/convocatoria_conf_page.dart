@@ -23,6 +23,7 @@ class ConvocatoriaConfPage extends ConsumerStatefulWidget {
 class _ConvocatoriaConfPageState extends ConsumerState<ConvocatoriaConfPage> {
   List<Convocatoria> convocatoriasFiltradas = [];
   String searchText = '';
+  final repository = ConvocatoriaRepository();
 
   void filtrarConvocatorias(String query, List<Convocatoria> convocatorias) {
     setState(() {
@@ -41,9 +42,16 @@ class _ConvocatoriaConfPageState extends ConsumerState<ConvocatoriaConfPage> {
   }
 
   void editarConvocatoria(Convocatoria convocatoria) {
-    final TextEditingController nombreController = TextEditingController(text: convocatoria.nombre);
-    final TextEditingController tipoController = TextEditingController(text: convocatoria.tipo);
-    final TextEditingController estadoController = TextEditingController(text: convocatoria.estado);
+    final nombreController = TextEditingController(text: convocatoria.nombre);
+    final tipoController = TextEditingController(text: convocatoria.tipo);
+    final estadoController = TextEditingController(text: convocatoria.estado);
+    final descripcionController = TextEditingController(text: convocatoria.descripcion);
+    final requisitosController = TextEditingController(text: convocatoria.requisitos);
+    final promedioMinimoController = TextEditingController(text: convocatoria.promedioMinimo.toString());
+    final nivelIdiomaController = TextEditingController(text: convocatoria.nivelIdioma);
+    final beneficiosController = TextEditingController(text: convocatoria.beneficios);
+    final fechaInicioController = TextEditingController(text: convocatoria.fechaInicio.toIso8601String().split('T').first);
+    final fechaFinController = TextEditingController(text: convocatoria.fechaFin.toIso8601String().split('T').first);
 
     showDialog(
       context: context,
@@ -55,23 +63,89 @@ class _ConvocatoriaConfPageState extends ConsumerState<ConvocatoriaConfPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                    controller: nombreController,
-                    decoration: const InputDecoration(labelText: 'Nombre')),
+                  controller: nombreController,
+                  decoration: const InputDecoration(labelText: 'Nombre'),
+                ),
                 TextField(
-                    controller: tipoController,
-                    decoration: const InputDecoration(labelText: 'Tipo de Movilidad')),
+                  controller: tipoController,
+                  decoration: const InputDecoration(labelText: 'Tipo'),
+                ),
                 TextField(
-                    controller: estadoController,
-                    decoration: const InputDecoration(labelText: 'Estado')),
+                  controller: estadoController,
+                  decoration: const InputDecoration(labelText: 'Estado'),
+                ),
+                TextField(
+                  controller: descripcionController,
+                  decoration: const InputDecoration(labelText: 'Descripción'),
+                ),
+                TextField(
+                  controller: requisitosController,
+                  decoration: const InputDecoration(labelText: 'Requisitos'),
+                ),
+                TextField(
+                  controller: promedioMinimoController,
+                  decoration: const InputDecoration(labelText: 'Promedio Mínimo'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextField(
+                  controller: nivelIdiomaController,
+                  decoration: const InputDecoration(labelText: 'Nivel de Idioma'),
+                ),
+                TextField(
+                  controller: beneficiosController,
+                  decoration: const InputDecoration(labelText: 'Beneficios'),
+                ),
+                TextField(
+                  controller: fechaInicioController,
+                  decoration: const InputDecoration(labelText: 'Fecha de Inicio (YYYY-MM-DD)'),
+                ),
+                TextField(
+                  controller: fechaFinController,
+                  decoration: const InputDecoration(labelText: 'Fecha de Fin (YYYY-MM-DD)'),
+                ),
               ],
             ),
           ),
           actions: [
             TextButton(
               onPressed: () async {
-                // Actualización pendiente con el repositorio.
-                setState(() {});
-                Navigator.pop(context);
+                final updatedConvocatoria = Convocatoria(
+                  id: convocatoria.id,
+                  idConvocatoria: convocatoria.idConvocatoria,
+                  nombre: nombreController.text,
+                  tipo: tipoController.text,
+                  estado: estadoController.text,
+                  descripcion: descripcionController.text,
+                  requisitos: requisitosController.text,
+                  promedioMinimo: double.tryParse(promedioMinimoController.text) ?? 0.0,
+                  nivelIdioma: nivelIdiomaController.text,
+                  beneficios: beneficiosController.text,
+                  fechaInicio: DateTime.tryParse(fechaInicioController.text) ?? DateTime.now(),
+                  fechaFin: DateTime.tryParse(fechaFinController.text) ?? DateTime.now(),
+                );
+
+                try {
+                  await repository.editarConvocatoria(
+                    updatedConvocatoria.idConvocatoria!,
+                    updatedConvocatoria.toJson(),
+                  );
+
+                  setState(() {
+                    int index = convocatoriasFiltradas.indexOf(convocatoria);
+                    if (index != -1) {
+                      convocatoriasFiltradas[index] = updatedConvocatoria;
+                    }
+                  });
+
+                  ref.refresh(convocatoriaProvider);
+
+                  Navigator.pop(context);
+                } catch (e) {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error al actualizar: $e')),
+                  );
+                }
               },
               child: const Text(
                 'Guardar',
@@ -85,9 +159,7 @@ class _ConvocatoriaConfPageState extends ConsumerState<ConvocatoriaConfPage> {
               onPressed: () => Navigator.pop(context),
               child: const Text(
                 'Cancelar',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           ],
@@ -95,6 +167,8 @@ class _ConvocatoriaConfPageState extends ConsumerState<ConvocatoriaConfPage> {
       },
     );
   }
+
+
 
   void eliminarConvocatoria(Convocatoria convocatoria) {
     showDialog(
@@ -106,9 +180,29 @@ class _ConvocatoriaConfPageState extends ConsumerState<ConvocatoriaConfPage> {
           actions: [
             TextButton(
               onPressed: () async {
-                // Eliminación pendiente con el repositorio.
-                setState(() {});
-                Navigator.pop(context);
+                Navigator.of(context).pop();
+
+                final messenger = ScaffoldMessenger.of(context);
+
+                try {
+                  await repository.eliminarConvocatoria(convocatoria.idConvocatoria!);
+
+                  if (!mounted) return;
+
+                  setState(() {
+                    convocatoriasFiltradas.remove(convocatoria);
+                  });
+
+                  ref.refresh(convocatoriaProvider);
+
+                  messenger.showSnackBar(
+                    const SnackBar(content: Text('Convocatoria eliminada exitosamente')),
+                  );
+                } catch (e) {
+                  messenger.showSnackBar(
+                    SnackBar(content: Text('Error al eliminar: $e')),
+                  );
+                }
               },
               child: const Text(
                 'Eliminar',
@@ -119,7 +213,7 @@ class _ConvocatoriaConfPageState extends ConsumerState<ConvocatoriaConfPage> {
               ),
             ),
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Navigator.of(context).pop(),
               child: const Text(
                 'Cancelar',
                 style: TextStyle(
@@ -132,6 +226,8 @@ class _ConvocatoriaConfPageState extends ConsumerState<ConvocatoriaConfPage> {
       },
     );
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -196,11 +292,14 @@ class _ConvocatoriaConfPageState extends ConsumerState<ConvocatoriaConfPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    CandidatosPage(convocatoria: convocatoria),
+                                builder: (context) => CandidatosPage(
+                                  convocatoriaId: convocatoria.idConvocatoria!,
+                                  convocatoriaNombre: convocatoria.nombre,
+                                ),
                               ),
                             );
                           },
+
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
