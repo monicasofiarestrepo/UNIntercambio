@@ -6,6 +6,7 @@ import 'package:un_intercambio/features/convocatoria_page.dart';
 import 'package:un_intercambio/features/convocatoria_conf_page.dart';
 import 'package:un_intercambio/features/calendar_page.dart';
 import 'package:un_intercambio/features/chat_page.dart';
+import 'package:un_intercambio/features/formulario_postulacion_page.dart';
 import 'package:un_intercambio/features/home_page.dart';
 import 'package:un_intercambio/features/info_page.dart';
 import 'package:un_intercambio/features/login_page.dart';
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
           '/reports': (context) => const ReportPage(title: 'Reportes'),
           '/calendar': (context) => const CalendarPage(title: 'Calendario'),
           '/convocatoriasConfig': (context) => const ConvocatoriaConfPage(title: 'Convocatorias'),
+          '/formularioPostulacion': (context) => const PostulacionForm(),
           //'/convocatorias': (context) => const ConvocatoriaPage(title: 'Convocatorias'),
           '/formularioConvocatorias': (context) =>
               const FormularioConvocatoriaPage(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:un_intercambio/core/theme.dart';
 
 class Postulation {
   final String title;
@@ -41,6 +42,10 @@ class PostulationsList extends StatelessWidget {
             const Text(
               "Mis Aplicaciones",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const Text(
+              "*Los documentos oficiales pueden llegarte a tu correo electrónico",
+              style: TextStyle(fontSize: 12, color: Colors.grey),
             ),
             const SizedBox(height: 10),
             Expanded(
@@ -91,16 +96,16 @@ class PostulationItem extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: Colors.green.shade100,
+                  color:  postulation.status == "Activa" ?  Colors.green.shade100 : SystemColors.labelWarning,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.check_circle_outline, size: 14, color: Colors.green),
+                    postulation.status == "Activa" ? const Icon(Icons.check_circle_outline, size: 14, color: Colors.green) : const Icon(Icons.error_outline, size: 14, color: Colors.deepOrange),
                     const SizedBox(width: 4),
                     Text(
                       postulation.status,
-                      style: const TextStyle(fontSize: 14, color: Colors.green, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 14, color: postulation.status == "Activa" ? Colors.green : Colors.deepOrange, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -108,13 +113,13 @@ class PostulationItem extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          LinearProgressIndicator(
+          postulation.status == "Activa" ? LinearProgressIndicator(
             value: postulation.progress,
             minHeight: 6,
             backgroundColor: Colors.grey.shade300,
             color: Colors.lightBlueAccent,
             borderRadius: BorderRadius.circular(10),
-          ),
+          ) : const SizedBox(),
         ],
       ),
     );

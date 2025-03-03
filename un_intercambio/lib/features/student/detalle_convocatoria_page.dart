@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:un_intercambio/core/theme.dart';
 import 'package:un_intercambio/features/base_page.dart';
 import 'package:un_intercambio/data/models/convocatoria.dart';
+import 'package:un_intercambio/features/chat_page.dart';
+import 'package:un_intercambio/features/formulario_postulacion_page.dart';
 
 String getCurrentTime() {
   return DateFormat('HH:mm').format(DateTime.now());
@@ -111,17 +113,14 @@ class DetalleConvocatoriaPage extends StatelessWidget {
               runSpacing: 8, // Espacio vertical si se acomodan en varias líneas
               children: [
                 TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "Reviews",
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: SystemColors.primaryPrink),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ChatPage(title: "Representantes de la convocatoria"),
+                      ),
+                    );
+                  },
                   child: const Text(
                     "Ir al Chat",
                     style: TextStyle(
@@ -131,7 +130,14 @@ class DetalleConvocatoriaPage extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PostulacionForm(),
+                      ),
+                    );
+                  },
                   child: const Text(
                     "Postularme",
                     style: TextStyle(

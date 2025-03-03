@@ -79,7 +79,7 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
                         title: "Convocatoria 3",
                         description: "Convocatoria para movilidad saliente internacional",
                         location: "Alemania",
-                        status: "Activa",
+                        status: "Vencida",
                         progress: 0.3,
                       ),
                         Postulation(
