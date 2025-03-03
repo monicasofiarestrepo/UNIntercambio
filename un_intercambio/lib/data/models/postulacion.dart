@@ -51,22 +51,18 @@ class Postulacion {
     );
   }
 
+
   Map<String, dynamic> toJson() {
     return {
-      '_id': id,
-      'correoElectronico': correoElectronico,
-      'idConvocatoria': idConvocatoria,
-      'estado': estado,
-      'promedio': promedio,
-      'porcentajeAvance': porcentajeAvance,
-      'carrera': carrera,
-      'idiomas': idiomas,
-      'celular': celular,
-      'nombreConvocatoria': nombreConvocatoria,
-      'descripcion': descripcion,
-      'pais': pais,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
+      "correoElectronico": correoElectronico,
+      "idConvocatoria": idConvocatoria, 
+      "estado": "En Progreso", 
+      "promedio": promedio,
+      "porcentajeAvance": porcentajeAvance,
+      "carrera": carrera,
+      "idiomas": idiomas,
+      "celular": celular,
     };
   }
 }
+

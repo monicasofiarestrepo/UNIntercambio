@@ -17,13 +17,30 @@ class PostulacionRepository {
     }
   }
 
-  Future<bool> enviarPostulacion(Postulacion postulacion) async {
+Future<bool> enviarPostulacion(Postulacion postulacion) async {
+  final String url = 'https://backend-devmovil.onrender.com/postulaciones';
+
+  try {
     final response = await http.post(
-      Uri.parse(apiUrl),
+      Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(postulacion.toJson()),
     );
 
-    return response.statusCode == 201;
+    print('➡️ POST a $url');
+    print('📤 Enviando: ${jsonEncode(postulacion.toJson())}');
+    print('🔄 Código de respuesta: ${response.statusCode}');
+    print('📩 Respuesta del backend: ${response.body}');
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
+    print('❌ Error al enviar la postulación: $e');
+    return false;
   }
+}
+
 }
