@@ -29,7 +29,6 @@ final postulationsProvider = FutureProvider<List<Postulation>>((ref) async {
   return [];
 });
 
-// ignore: must_be_immutable
 class UserProfilePage extends ConsumerStatefulWidget {
   final String title;
   bool userInfo;
@@ -71,7 +70,7 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
             child: IconButton(
               icon: const Icon(Icons.logout, color: SystemColors.primaryPrink),
               onPressed: () {
-              Navigator.pushNamed(context, '/login');
+                Navigator.pushNamed(context, '/login');
               },
             ),
           ),
@@ -98,7 +97,6 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
                         loading: () => const CircularProgressIndicator(),
                         error: (_, __) => const Text("Error al cargar postulaciones"),
                       ),
-                
                 isEstudiante ? SizedBox(
                   width: 300,
                   child: PrimaryButton(
@@ -177,7 +175,7 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
                               ),
                             ],
                           ),
-                  ) : const SizedBox(),
+                  ) : const SizedBox()
                 ),
               ),
             ],

@@ -27,10 +27,7 @@ Future<bool> enviarPostulacion(Postulacion postulacion) async {
       body: jsonEncode(postulacion.toJson()),
     );
 
-    print('➡️ POST a $url');
-    print('📤 Enviando: ${jsonEncode(postulacion.toJson())}');
-    print('🔄 Código de respuesta: ${response.statusCode}');
-    print('📩 Respuesta del backend: ${response.body}');
+
 
     if (response.statusCode == 201 || response.statusCode == 200) {
       return true;
@@ -38,7 +35,6 @@ Future<bool> enviarPostulacion(Postulacion postulacion) async {
       return false;
     }
   } catch (e) {
-    print('❌ Error al enviar la postulación: $e');
     return false;
   }
 }
