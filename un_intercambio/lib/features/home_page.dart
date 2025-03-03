@@ -78,8 +78,7 @@ class HomePage extends ConsumerWidget {
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                IconColumn(icon: Icons.assignment, label: 'Convocatorias', route: '/convocatoriasConfig'),
-                IconColumn(icon: Icons.people, label: 'Evaluación', route: '/evaluation'),
+                IconColumn(icon: Icons.assignment, label: 'Editar convocatorias', route: '/convocatoriasConfig'),
               ],
             ),
             const SizedBox(height: 16),
