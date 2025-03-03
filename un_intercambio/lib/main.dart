@@ -63,6 +63,7 @@ class MyApp extends StatelessWidget {
           '/reports': (context) => const ReportPage(title: 'Reportes'),
           '/calendar': (context) => const CalendarPage(title: 'Calendario'),
           '/convocatoriasConfig': (context) => const ConvocatoriaConfPage(title: 'Convocatorias'),
+          '/formularioPostulacion': (context) => const PostulacionForm(tituloConvocatoria: '', nivelIdioma: '', descripcionConvocatoria: "", idConvocatoria: "",), 
           // Ruta para candidatos, que recibe el id de la convocatoria
           '/candidatos': (context) {
             final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;

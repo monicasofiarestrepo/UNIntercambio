@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:un_intercambio/core/theme.dart';
+
 
 class Postulation {
   final String title;
@@ -89,23 +89,19 @@ class PostulationItem extends StatelessWidget {
           const SizedBox(height: 5),
           Row(
             children: [
-              const Icon(Icons.location_on, size: 16, color: Colors.grey),
-              const SizedBox(width: 4),
-              Text(postulation.location, style: const TextStyle(fontSize: 14)),
-              const SizedBox(width: 10),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color:  postulation.status == "Activa" ?  Colors.green.shade100 : SystemColors.labelWarning,
+                  color:   Colors.green.shade100 ,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
                   children: [
-                    postulation.status == "Activa" ? const Icon(Icons.check_circle_outline, size: 14, color: Colors.green) : const Icon(Icons.error_outline, size: 14, color: Colors.deepOrange),
+                     const Icon(Icons.check_circle_outline, size: 14, color: Colors.green),
                     const SizedBox(width: 4),
                     Text(
                       postulation.status,
-                      style: TextStyle(fontSize: 14, color: postulation.status == "Activa" ? Colors.green : Colors.deepOrange, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 14, color:  Colors.green ),
                     ),
                   ],
                 ),
@@ -113,13 +109,13 @@ class PostulationItem extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          postulation.status == "Activa" ? LinearProgressIndicator(
+           LinearProgressIndicator(
             value: postulation.progress,
             minHeight: 6,
             backgroundColor: Colors.grey.shade300,
             color: Colors.lightBlueAccent,
             borderRadius: BorderRadius.circular(10),
-          ) : const SizedBox(),
+          ) ,
         ],
       ),
     );

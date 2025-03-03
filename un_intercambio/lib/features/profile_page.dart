@@ -7,13 +7,33 @@ import 'package:un_intercambio/features/base_page.dart';
 import 'package:un_intercambio/data/providers/usuario_provider.dart';
 import 'package:un_intercambio/core/global_variables.dart';
 import 'package:un_intercambio/features/widgets/postulaciones.dart';
+import 'package:dio/dio.dart';
+import 'dart:math';
+
+final postulationsProvider = FutureProvider<List<Postulation>>((ref) async {
+  final usuario = await ref.watch(usuarioActualProvider.future);
+  if (usuario == null) return [];
+
+  final response = await Dio().get('https://backend-devmovil.onrender.com/postulaciones/usuario/correo/${usuario.correo}');
+  if (response.statusCode == 200) {
+    List<dynamic> data = response.data;
+    return data.map((json) => Postulation(
+      title: json["nombreConvocatoria"],
+      description: json["descripcion"],
+      location: json["pais"],
+      status: json["estado"],
+      progress: getRandomDouble(), 
+    )).toList();
+  }
+  return [];
+});
 
 // ignore: must_be_immutable
 class UserProfilePage extends ConsumerStatefulWidget {
   final String title;
   bool userInfo;
 
- UserProfilePage({super.key, required this.title, this.userInfo = true});
+  UserProfilePage({super.key, required this.title, this.userInfo = true});
 
   @override
   ConsumerState<UserProfilePage> createState() => _UserProfilePageState();
@@ -37,7 +57,8 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
   @override
   Widget build(BuildContext context) {
     final usuarioAsyncValue = ref.watch(usuarioActualProvider);
-    final bool isEstudiante = getIsEstudiante(ref); // Get user type dynamically
+    final postulationsAsyncValue = ref.watch(postulationsProvider);
+    final bool isEstudiante = getIsEstudiante(ref);
 
     return BasePage(
       currentIndex: 3,
@@ -59,64 +80,25 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
             const SizedBox(height: 30),
             widget.userInfo
                 ? buildUserInfoContainer(usuarioAsyncValue, isEstudiante)
-                : PostulationsList(
-                    postulations: [
-                      Postulation(
-                        title: "Convocatoria 1",
-                        description: "Convocatoria para movilidad saliente internacional",
-                        location: "EEUU",
-                        status: "Activa",
-                        progress: 0.8,
-                      ),
-                      Postulation(
-                        title: "Convocatoria 2",
-                        description: "Convocatoria para movilidad saliente internacional",
-                        location: "España",
-                        status: "Activa",
-                        progress: 0.5,
-                      ),
-                      Postulation(
-                        title: "Convocatoria 3",
-                        description: "Convocatoria para movilidad saliente internacional",
-                        location: "Alemania",
-                        status: "Vencida",
-                        progress: 0.3,
-                      ),
-                        Postulation(
-                        title: "Convocatoria 4",
-                        description: "Convocatoria para investigación",
-                        location: "Alemania",
-                        status: "Activa",
-                        progress: 0.3,
-                      ),
-                      Postulation(
-                        title: "Convocatoria 5",
-                        description: "Convocatoria para doble titulación",
-                        location: "Alemania",
-                        status: "Activa",
-                        progress: 0.3,
-                      ),
-                        Postulation(
-                        title: "Convocatoria 6",
-                        description: "Convocatoria para perrearse a extranjeros",
-                        location: "España",
-                        status: "Activa",
-                        progress: 0.3,
-                      ),
-                    ],
+                : postulationsAsyncValue.when(
+                    data: (postulations) => PostulationsList(postulations: postulations),
+                    loading: () => const CircularProgressIndicator(),
+                    error: (_, __) => const Text("Error al cargar postulaciones"),
                   ),
-
-
-            isEstudiante?  SizedBox(width: 300, child: PrimaryButton(
-              child: widget.userInfo
-                  ? const Text("Ver estado de postulaciones")
-                  : const Text("Ver información del usuario"),
-              onPressed: () {
-                setState(() {
-                  widget.userInfo = !widget.userInfo;
-                });
-              },
-            ),) : const SizedBox()
+            
+            isEstudiante ? SizedBox(
+              width: 300,
+              child: PrimaryButton(
+                child: widget.userInfo
+                    ? const Text("Ver estado de postulaciones")
+                    : const Text("Ver información del usuario"),
+                onPressed: () {
+                  setState(() {
+                    widget.userInfo = !widget.userInfo;
+                  });
+                },
+              ),
+            ) : const SizedBox()
           ],
         ),
       ),
@@ -193,6 +175,9 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
   }
 }
 
+
+
+
 class InfoText extends StatelessWidget {
   final String label;
   final String value;
@@ -217,4 +202,7 @@ class InfoText extends StatelessWidget {
       ),
     );
   }
+}
+double getRandomDouble() {
+  return Random().nextDouble();
 }

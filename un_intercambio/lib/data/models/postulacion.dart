@@ -54,6 +54,8 @@ class Postulacion {
 
   Map<String, dynamic> toJson() {
     return {
+      "nombreConvocatoria": nombreConvocatoria,
+      "descripcion": descripcion,
       "correoElectronico": correoElectronico,
       "idConvocatoria": idConvocatoria, 
       "estado": "En Progreso", 
