@@ -54,7 +54,7 @@ class _AdminProfilePageState extends ConsumerState<AdminProfilePage> {
                     children: [
                       Center(
                         child: Image.asset(
-                          'assets/images/avatar1.png',
+                          'assets/images/avatar3.png',
                           fit: BoxFit.cover,
                         ),
                       ),

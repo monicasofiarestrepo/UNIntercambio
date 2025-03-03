@@ -21,7 +21,6 @@ class DetallesCandidatoPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text("Programa: ${candidato.programa}"),
-            Text("Semestre: ${candidato.semestre}"),
             Text("Correo: ${candidato.correo}"),
           ],
         ),

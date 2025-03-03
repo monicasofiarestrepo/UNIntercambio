@@ -6,15 +6,20 @@ import 'package:un_intercambio/data/repositories/candidato_repository.dart';
 import 'package:un_intercambio/features/detalles_candidatos_page.dart';
 import 'package:un_intercambio/data/models/convocatoria.dart';
 
-final candidatosProvider = FutureProvider.family<List<Candidato>, int>((ref, convocatoriaId) async {
+final candidatosProvider = FutureProvider.family<List<Candidato>, String?>((ref, convocatoriaId) async {
   final repository = CandidatoRepository();
-  return repository.fetchCandidatosPorConvocatoria(convocatoriaId);
+  return repository.fetchCandidatosPorConvocatoria(convocatoriaId!);
 });
 
 class CandidatosPage extends ConsumerStatefulWidget {
-  final Convocatoria convocatoria;
+  final String? convocatoriaId;
+  final String convocatoriaNombre;
 
-  const CandidatosPage({super.key, required this.convocatoria});
+  const CandidatosPage({
+    super.key,
+    required this.convocatoriaId,
+    required this.convocatoriaNombre,
+  });
 
   @override
   ConsumerState<CandidatosPage> createState() => _CandidatosPageState();
@@ -33,8 +38,7 @@ class _CandidatosPageState extends ConsumerState<CandidatosPage> {
       } else {
         candidatosFiltrados = candidatos.where((candidato) =>
           candidato.nombre.toLowerCase().contains(query.toLowerCase()) ||
-          candidato.programa.toLowerCase().contains(query.toLowerCase()) ||
-          candidato.semestre.toLowerCase().contains(query.toLowerCase())
+          candidato.programa.toLowerCase().contains(query.toLowerCase())
         ).toList();
       }
     });
@@ -42,13 +46,11 @@ class _CandidatosPageState extends ConsumerState<CandidatosPage> {
 
   @override
   Widget build(BuildContext context) {
-    final candidatosAsync = ref.watch(
-      candidatosProvider(widget.convocatoria.idConvocatoria as int)
-    );
+    final candidatosAsync = ref.watch(candidatosProvider(widget.convocatoriaId));
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Candidatos postulados - ${widget.convocatoria.nombre}'),
+        title: Text('Candidatos postulados - ${widget.convocatoriaNombre}'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -104,7 +106,6 @@ class _CandidatosPageState extends ConsumerState<CandidatosPage> {
                           ),
                           subtitle: Text(
                             'Promedio: ${candidato.promedio}\n'
-                            'Avance: ${candidato.avance}%\n'
                             'Carrera: ${candidato.programa}',
                           ),
                           trailing: IconButton(

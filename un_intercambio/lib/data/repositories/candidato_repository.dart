@@ -3,11 +3,11 @@ import 'package:http/http.dart' as http;
 import '../models/candidato.dart';
 
 class CandidatoRepository {
-  final String baseUrl = 'https://backend-devmovil.onrender.com/candidatos/';
+  final String baseUrl = 'https://backend-devmovil.onrender.com/postulaciones/';
 
-  Future<List<Candidato>> fetchCandidatosPorConvocatoria(int convocatoriaId) async {
+  Future<List<Candidato>> fetchCandidatosPorConvocatoria(String convocatoriaId) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/convocatorias/$convocatoriaId/candidatos'),
+      Uri.parse('$baseUrl/convocatoria/$convocatoriaId'),
     );
 
     if (response.statusCode == 200) {

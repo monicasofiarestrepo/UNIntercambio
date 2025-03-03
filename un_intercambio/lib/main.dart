@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 import 'package:provider/provider.dart';
 import 'package:un_intercambio/core/global_variables.dart';
+import 'package:un_intercambio/features/candidatos_page.dart';
 import 'package:un_intercambio/features/convocatoria_page.dart';
 import 'package:un_intercambio/features/convocatoria_conf_page.dart';
 import 'package:un_intercambio/features/calendar_page.dart';
@@ -62,7 +63,16 @@ class MyApp extends StatelessWidget {
           '/reports': (context) => const ReportPage(title: 'Reportes'),
           '/calendar': (context) => const CalendarPage(title: 'Calendario'),
           '/convocatoriasConfig': (context) => const ConvocatoriaConfPage(title: 'Convocatorias'),
-          '/formularioPostulacion': (context) => const PostulacionForm(tituloConvocatoria: '', nivelIdioma: ''), 
+          // Ruta para candidatos, que recibe el id de la convocatoria
+          '/candidatos': (context) {
+            final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+            final convocatoriaId = args['convocatoriaId'] as String;
+            final convocatoriaNombre = args['convocatoriaNombre'] as String;
+            return CandidatosPage(convocatoriaId: convocatoriaId, convocatoriaNombre: convocatoriaNombre);
+          },
+
+
+
           //'/convocatorias': (context) => const ConvocatoriaPage(title: 'Convocatorias'),
           '/formularioConvocatorias': (context) =>
               const FormularioConvocatoriaPage(),
