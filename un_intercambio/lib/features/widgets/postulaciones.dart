@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:un_intercambio/core/theme.dart';
+
 
 class Postulation {
   final String title;
