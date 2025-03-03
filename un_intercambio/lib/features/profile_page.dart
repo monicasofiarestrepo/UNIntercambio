@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:un_intercambio/core/buttons.dart';
+import 'package:un_intercambio/core/theme.dart';
 import 'package:un_intercambio/data/models/usuario.dart';
 import 'package:un_intercambio/features/base_page.dart';
 import 'package:un_intercambio/data/providers/usuario_provider.dart';
@@ -22,7 +23,7 @@ final postulationsProvider = FutureProvider<List<Postulation>>((ref) async {
       description: json["descripcion"],
       location: json["pais"],
       status: json["estado"],
-      progress: getRandomDouble(), 
+      progress: 0.5, // Default value, since the backend doesn't provide progress
     )).toList();
   }
   return [];
@@ -62,45 +63,59 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
 
     return BasePage(
       currentIndex: 3,
-      child: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 100),
-            usuarioAsyncValue.when(
-              data: (usuario) {
-                if (usuario == null) return const Text("Usuario no encontrado");
-                return Text(
-                  usuario.nombre,
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                );
+      child: Stack(
+        children: [
+          Positioned(
+            top: 40,
+            right: 20,
+            child: IconButton(
+              icon: const Icon(Icons.logout, color: SystemColors.primaryPrink),
+              onPressed: () {
+              Navigator.pushNamed(context, '/login');
               },
-              loading: () => const CircularProgressIndicator(),
-              error: (_, __) => const Text("Error al cargar usuario"),
             ),
-            const SizedBox(height: 30),
-            widget.userInfo
-                ? buildUserInfoContainer(usuarioAsyncValue, isEstudiante)
-                : postulationsAsyncValue.when(
-                    data: (postulations) => PostulationsList(postulations: postulations),
-                    loading: () => const CircularProgressIndicator(),
-                    error: (_, __) => const Text("Error al cargar postulaciones"),
+          ),
+          Center(
+            child: Column(
+              children: [
+                const SizedBox(height: 100),
+                usuarioAsyncValue.when(
+                  data: (usuario) {
+                    if (usuario == null) return const Text("Usuario no encontrado");
+                    return Text(
+                      usuario.nombre,
+                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    );
+                  },
+                  loading: () => const CircularProgressIndicator(),
+                  error: (_, __) => const Text("Error al cargar usuario"),
+                ),
+                const SizedBox(height: 30),
+                widget.userInfo
+                    ? buildUserInfoContainer(usuarioAsyncValue, isEstudiante)
+                    : postulationsAsyncValue.when(
+                        data: (postulations) => PostulationsList(postulations: postulations),
+                        loading: () => const CircularProgressIndicator(),
+                        error: (_, __) => const Text("Error al cargar postulaciones"),
+                      ),
+                
+                isEstudiante ? SizedBox(
+                  width: 300,
+                  child: PrimaryButton(
+                    child: widget.userInfo
+                        ? const Text("Ver estado de postulaciones")
+                        : const Text("Ver información del usuario"),
+                    onPressed: () {
+                      setState(() {
+                        widget.userInfo = !widget.userInfo;
+                      });
+                    },
                   ),
-            
-            isEstudiante ? SizedBox(
-              width: 300,
-              child: PrimaryButton(
-                child: widget.userInfo
-                    ? const Text("Ver estado de postulaciones")
-                    : const Text("Ver información del usuario"),
-                onPressed: () {
-                  setState(() {
-                    widget.userInfo = !widget.userInfo;
-                  });
-                },
-              ),
-            ) : const SizedBox()
-          ],
-        ),
+                ) : const SizedBox()
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -174,9 +189,6 @@ class _UserProfilePageState extends ConsumerState<UserProfilePage> {
     );
   }
 }
-
-
-
 
 class InfoText extends StatelessWidget {
   final String label;
