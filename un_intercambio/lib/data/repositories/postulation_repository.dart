@@ -5,8 +5,9 @@ import '../models/postulacion.dart';
 class PostulacionRepository {
   final String apiUrl = 'https://backend-devmovil.onrender.com/postulaciones';
 
-  Future<List<Postulacion>> obtenerPostulaciones() async {
-    final response = await http.get(Uri.parse(apiUrl));
+  Future<List<Postulacion>> obtenerPostulaciones({String? correo}) async {
+    String url = correo != null ? '$apiUrl/usuario/correo/$correo' : apiUrl;
+    final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body);

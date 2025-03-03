@@ -6,8 +6,8 @@ class PostulacionService {
 
   PostulacionService(this._repository);
 
-  Future<List<Postulacion>> obtenerPostulaciones() {
-    return _repository.obtenerPostulaciones();
+  Future<List<Postulacion>> obtenerPostulaciones({String? correo}) {
+    return _repository.obtenerPostulaciones(correo: correo);
   }
 
   Future<bool> postular(Postulacion postulacion) {

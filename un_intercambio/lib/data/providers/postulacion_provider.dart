@@ -4,12 +4,10 @@ import '../repositories/postulation_repository.dart';
 import '../models/postulacion.dart';
 
 final postulacionRepositoryProvider = Provider((ref) => PostulacionRepository());
-final postulacionServiceProvider = Provider(
-  (ref) => PostulacionService(ref.read(postulacionRepositoryProvider)),
-);
+final postulacionServiceProvider = Provider((ref) => PostulacionService(ref.read(postulacionRepositoryProvider)));
 
-final postulacionesFutureProvider = FutureProvider<List<Postulacion>>((ref) {
-  return ref.read(postulacionServiceProvider).obtenerPostulaciones();
+final postulacionesFutureProvider = FutureProvider.family<List<Postulacion>, String?>((ref, correo) {
+  return ref.read(postulacionServiceProvider).obtenerPostulaciones(correo: correo);
 });
 
 final postularFutureProvider = FutureProvider.family<bool, Postulacion>((ref, postulacion) {
